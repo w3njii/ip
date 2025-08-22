@@ -25,6 +25,28 @@ public class Steven {
                     System.out.println("\t\t" + (i + 1) + ". " + toDoList.get(i).toString());
                 }
                 continue;
+            } else if (input.startsWith("mark ")) {
+                int number;
+                try {
+                    number = Integer.parseInt(input.substring(5));
+                    System.out.println("\tOK, I will mark this task as done");
+                    toDoList.get(number - 1).markAsDone();
+                    System.out.println("\t" + toDoList.get(number - 1).toString());
+                    continue;
+                } catch (NumberFormatException e) {
+                    // Intentionally ignored because it is possible that the substring after "mark" is not a number
+                }
+            } else if (input.startsWith("unmark ")) {
+                int number;
+                try {
+                    number = Integer.parseInt(input.substring(7));
+                    System.out.println("\tOK, I will mark this task as not done");
+                    toDoList.get(number - 1).markAsNotDone();
+                    System.out.println("\t" + toDoList.get(number - 1).toString());
+                    continue;
+                } catch (NumberFormatException e) {
+                    // Intentionally ignored because it is possible that the substring after "unmark" is not a number
+                }
             }
 
             toDoList.add(new Task(input));
