@@ -25,10 +25,20 @@ public class Steven {
                     System.out.println("\t\t" + (i + 1) + ". " + toDoList.get(i).toString());
                 }
             } else if (input.startsWith("todo")) {
-                String taskName = input.substring(5);
-                Task currentTask = new ToDo(taskName);
+                String description = input.substring(5);
+                Task currentTask = new ToDo(description);
                 toDoList.add(currentTask);
-                System.out.println("\t OK, I've added this task: " + currentTask);
+                System.out.println("\tOK, I've added this task: " + currentTask);
+                System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+            } else if (input.startsWith("deadline")) {
+                String descriptionAndDeadline = input.substring(9);
+                int byIndex = descriptionAndDeadline.indexOf(" /by ");
+                String description = descriptionAndDeadline.substring(0, byIndex);
+                String deadline = descriptionAndDeadline.substring(byIndex + 5);
+                Task currentTask = new Deadline(description, deadline);
+                toDoList.add(currentTask);
+                System.out.println("\tOK, I've added this task: " + currentTask);
+                System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
             } else if (input.startsWith("mark ")) {
                 int number;
                 try {
@@ -53,7 +63,7 @@ public class Steven {
                 Task currentTask = new Task(input);
                 toDoList.add(currentTask);
                 System.out.println("\tOK, I've added this task: " +  currentTask);
-
+                System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
             }
         }
 

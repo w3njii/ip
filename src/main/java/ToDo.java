@@ -4,6 +4,11 @@
  * @author w3njii
  */
 public class ToDo extends Task {
+    /**
+     * Creates a new to-do task with the given description.
+     *
+     * @param description a description of the task
+     */
     public ToDo(String description) {
         super(description);
     }
