@@ -1,10 +1,13 @@
 public class Steven {
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+        final String HORIZONTAL_LINE = "____________________________________________________________";
+        final String GREETING = "Hello! I'm Steven\nWhat can I do for you?";
+        final String GOODBYE = "Bye. Hope to see you again soon!";
+
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println(GREETING);
+        System.out.println(HORIZONTAL_LINE);
+        System.out.println(GOODBYE);
+        System.out.println(HORIZONTAL_LINE);
     }
 }
