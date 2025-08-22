@@ -39,6 +39,17 @@ public class Steven {
                 toDoList.add(currentTask);
                 System.out.println("\tOK, I've added this task: " + currentTask);
                 System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+            } else if (input.startsWith("event")) {
+                String descriptionAndTime = input.substring(6);
+                int fromIndex = descriptionAndTime.indexOf(" /from ");
+                int toIndex = descriptionAndTime.indexOf(" /to ");
+                String description = descriptionAndTime.substring(0, fromIndex);
+                String from = descriptionAndTime.substring(fromIndex + 7, toIndex);
+                String to = descriptionAndTime.substring(toIndex + 5);
+                Task currentTask = new Event(description, from, to);
+                toDoList.add(currentTask);
+                System.out.println("\tOK, I've added this task: " + currentTask);
+                System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
             } else if (input.startsWith("mark ")) {
                 int number;
                 try {
