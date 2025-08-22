@@ -8,7 +8,7 @@ public class Steven {
         final String GREETING = "Hello There! I'm Steven\nHow may I help you?";
         final String GOODBYE = "Bye.";
 
-        ArrayList<String> toDoList = new ArrayList<>();
+        ArrayList<Task> toDoList = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
         System.out.println(GREETING);
@@ -16,15 +16,18 @@ public class Steven {
 
         while (true) {
             String input = scanner.nextLine();
+
             if (input.equals("bye")) {
                 break;
             } else if (input.equals("list")) {
+                System.out.println("\t Here are the tasks in your list: ");
                 for (int i = 0; i < toDoList.size(); i++) {
-                    System.out.println("\t" + i + 1 + ". " + toDoList.get(i));
+                    System.out.println("\t\t" + (i + 1) + ". " + toDoList.get(i).toString());
                 }
                 continue;
             }
-            toDoList.add(input);
+
+            toDoList.add(new Task(input));
             System.out.println("\t added: " + input);
         }
 
