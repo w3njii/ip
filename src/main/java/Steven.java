@@ -24,7 +24,11 @@ public class Steven {
                 for (int i = 0; i < toDoList.size(); i++) {
                     System.out.println("\t\t" + (i + 1) + ". " + toDoList.get(i).toString());
                 }
-                continue;
+            } else if (input.startsWith("todo")) {
+                String taskName = input.substring(5);
+                Task currentTask = new ToDo(taskName);
+                toDoList.add(currentTask);
+                System.out.println("\t OK, I've added this task: " + currentTask);
             } else if (input.startsWith("mark ")) {
                 int number;
                 try {
@@ -32,7 +36,6 @@ public class Steven {
                     System.out.println("\tOK, I will mark this task as done");
                     toDoList.get(number - 1).markAsDone();
                     System.out.println("\t" + toDoList.get(number - 1).toString());
-                    continue;
                 } catch (NumberFormatException e) {
                     // Intentionally ignored because it is possible that the substring after "mark" is not a number
                 }
@@ -43,14 +46,15 @@ public class Steven {
                     System.out.println("\tOK, I will mark this task as not done");
                     toDoList.get(number - 1).markAsNotDone();
                     System.out.println("\t" + toDoList.get(number - 1).toString());
-                    continue;
                 } catch (NumberFormatException e) {
                     // Intentionally ignored because it is possible that the substring after "unmark" is not a number
                 }
-            }
+            } else {
+                Task currentTask = new Task(input);
+                toDoList.add(currentTask);
+                System.out.println("\tOK, I've added this task: " +  currentTask);
 
-            toDoList.add(new Task(input));
-            System.out.println("\t added: " + input);
+            }
         }
 
         scanner.close();

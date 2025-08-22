@@ -8,6 +8,15 @@
  */
 public class Task {
     /**
+     * Creates a new task with the given description.
+     *
+     * @param description a description of the task
+     */
+    public Task(String description) {
+        this.description = description;
+    }
+
+    /**
      * Indicates whether the task is completed.
      * Defaults to {@code false}.
      */
@@ -17,15 +26,6 @@ public class Task {
      * A short description of the task.
      */
     private final String description;
-
-    /**
-     * Creates a new task with the given description.
-     *
-     * @param description a description of the task
-     */
-    public Task(String description) {
-        this.description = description;
-    }
 
     /**
      * Marks this task as completed.
