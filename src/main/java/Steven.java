@@ -67,9 +67,31 @@ public class Steven {
         }
     }
 
-    public static void markTask(String input) throws InvalidMarkFormatException {
+    public static void deleteTask(String input) {
+        if (!input.startsWith("delete ")) {
+            System.out.println("Invalid input");
+            return;
+        }
         try {
-            int number = Integer.parseInt(input.substring(4).trim());
+            int number = Integer.parseInt(input.substring(7));
+            if (number < 1 || number > toDoList.size()) {
+                System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
+                return;
+            }
+            Task deletedTask = toDoList.remove(number - 1);
+            System.out.println("\tOK, DELETE THIS ONE ALR:\n\t" + deletedTask);
+            System.out.println("Now ur list got " + toDoList.size() + " task");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input");
+        }
+    }
+
+    public static void markTask(String input) throws InvalidMarkFormatException {
+        if (!input.startsWith("mark ")) {
+            throw new InvalidMarkFormatException();
+        }
+        try {
+            int number = Integer.parseInt(input.substring(5));
             if (number > toDoList.size() || number < 1) {
                 System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
                 return;
@@ -83,6 +105,9 @@ public class Steven {
     }
 
     public static void unmarkTask(String input) throws InvalidMarkFormatException {
+        if (!input.startsWith("unmark ")) {
+            throw new InvalidMarkFormatException();
+        }
         try {
             int number = Integer.parseInt(input.substring(7));
             if (number > toDoList.size() || number < 1) {
@@ -126,6 +151,8 @@ public class Steven {
                 } catch (InvalidMarkFormatException e) {
                     System.out.println(e.getMessage());
                 }
+            } else if (input.startsWith("delete")) {
+                deleteTask(input);
             } else {
                 System.out.println("\t?????");
             }
