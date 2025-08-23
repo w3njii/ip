@@ -58,8 +58,7 @@ public class Steven {
             String from = descriptionAndTime.substring(fromIndex + 7, toIndex);
             String to = descriptionAndTime.substring(toIndex + 5);
             if (from.trim().isEmpty() || to.trim().isEmpty()) {
-                System.out.println("\tYour event from when to when???");
-                return;
+                throw new MissingStartAndEndTimeException();
             }
             Task currentTask = new Event(description, from, to);
             toDoList.add(currentTask);
