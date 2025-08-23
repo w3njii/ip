@@ -19,26 +19,54 @@ public class Steven {
     private static void addTask(String input) {
         if (input.startsWith("todo")) {
             String description = input.substring(5);
+            if (description.trim().isEmpty()) {
+                System.out.println("\tWhr is your description???");
+                return;
+            }
             Task currentTask = new ToDo(description);
             toDoList.add(currentTask);
             System.out.println("\tOK, I've added this task: " + currentTask);
             System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
         } else if (input.startsWith("deadline")) {
-            String descriptionAndDeadline = input.substring(9);
+            String descriptionAndDeadline = input.substring(8);
+            if (descriptionAndDeadline.trim().isEmpty()) {
+                System.out.println("\tWhr is your description???");
+                return;
+            }
             int byIndex = descriptionAndDeadline.indexOf(" /by ");
+            if (byIndex == -1) {
+                System.out.println("\tPls use the correct format for deadline task");
+                return;
+            }
             String description = descriptionAndDeadline.substring(0, byIndex);
             String deadline = descriptionAndDeadline.substring(byIndex + 5);
+            if (deadline.trim().isEmpty()) {
+                System.out.println("\tWhr is your deadline???");
+                return;
+            }
             Task currentTask = new Deadline(description, deadline);
             toDoList.add(currentTask);
             System.out.println("\tOK, I've added this task: " + currentTask);
             System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
         } else if (input.startsWith("event")) {
-            String descriptionAndTime = input.substring(6);
+            String descriptionAndTime = input.substring(5);
+            if (descriptionAndTime.trim().isEmpty()) {
+                System.out.println("\tWhr is your description???");
+                return;
+            }
             int fromIndex = descriptionAndTime.indexOf(" /from ");
             int toIndex = descriptionAndTime.indexOf(" /to ");
+            if (fromIndex == -1 || toIndex == -1 || toIndex <= fromIndex) {
+                System.out.println("\tPls use the correct format for event task");
+                return;
+            }
             String description = descriptionAndTime.substring(0, fromIndex);
             String from = descriptionAndTime.substring(fromIndex + 7, toIndex);
             String to = descriptionAndTime.substring(toIndex + 5);
+            if (from.trim().isEmpty() || to.trim().isEmpty()) {
+                System.out.println("\tYour event from when to when???");
+                return;
+            }
             Task currentTask = new Event(description, from, to);
             toDoList.add(currentTask);
             System.out.println("\tOK, I've added this task: " + currentTask);
@@ -86,10 +114,7 @@ public class Steven {
             } else if (input.startsWith("unmark ")) {
                 unmarkTask(input);
             } else {
-                Task currentTask = new Task(input);
-                toDoList.add(currentTask);
-                System.out.println("\tOK, I've added this task: " +  currentTask);
-                System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+                System.out.println("\t?????");
             }
             System.out.println(HORIZONTAL_LINE);
         }
