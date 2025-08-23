@@ -1,49 +1,35 @@
 Hello There! I'm Steven
 How may I help you?
 ____________________________________________________________
-	OK, I've added this task: [ ] read book
+	?????
+____________________________________________________________
+	?????
+____________________________________________________________
+	Here are the tasks in your list: 
+____________________________________________________________
+	You only have 0 tasks in your list
+____________________________________________________________
+	?????
+____________________________________________________________
+	You only have 0 tasks in your list
+____________________________________________________________
+	You only have 0 tasks in your list
+____________________________________________________________
+	OK, I've added this task: [T][ ]  borrow book
 	Now there are 1 tasks in your list: 
 ____________________________________________________________
-	OK, I've added this task: [ ] return book
+	Here are the tasks in your list: 
+		1. [T][ ]  borrow book
+____________________________________________________________
+	OK, I've added this task: [D][ ]  return book (by: Sunday)
 	Now there are 2 tasks in your list: 
 ____________________________________________________________
-	Here are the tasks in your list: 
-		1. [ ] read book
-		2. [ ] return book
-____________________________________________________________
-	OK, I will mark this task as done
-	[X] return book
-____________________________________________________________
-	OK, I've added this task: [ ] read book again
+	OK, I've added this task: [E][ ]  project meeting (from: Mon 2pm to: 4pm)
 	Now there are 3 tasks in your list: 
 ____________________________________________________________
-	OK, I will mark this task as done
-	[X] read book again
-____________________________________________________________
-	OK, I will mark this task as not done
-	[ ] return book
-____________________________________________________________
-	OK, I've added this task: [T][ ] borrow book
-	Now there are 4 tasks in your list: 
-____________________________________________________________
 	Here are the tasks in your list: 
-		1. [ ] read book
-		2. [ ] return book
-		3. [X] read book again
-		4. [T][ ] borrow book
-____________________________________________________________
-	OK, I've added this task: [D][ ] return book (by: Sunday)
-	Now there are 5 tasks in your list: 
-____________________________________________________________
-	OK, I've added this task: [E][ ] project meeting (from: Mon 2pm to: 4pm)
-	Now there are 6 tasks in your list: 
-____________________________________________________________
-	Here are the tasks in your list: 
-		1. [ ] read book
-		2. [ ] return book
-		3. [X] read book again
-		4. [T][ ] borrow book
-		5. [D][ ] return book (by: Sunday)
-		6. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+		1. [T][ ]  borrow book
+		2. [D][ ]  return book (by: Sunday)
+		3. [E][ ]  project meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 	Bye.
