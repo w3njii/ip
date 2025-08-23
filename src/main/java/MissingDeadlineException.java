@@ -1,4 +1,4 @@
-public class MissingDeadlineException extends RuntimeException {
+public class MissingDeadlineException extends StevenException {
     public MissingDeadlineException() {
         super("\tWhr is your deadline???");
     }

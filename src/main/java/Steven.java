@@ -67,25 +67,25 @@ public class Steven {
         }
     }
 
-    public static void markTask(String input) {
+    public static void markTask(String input) throws InvalidMarkFormatException {
         try {
             int number = Integer.parseInt(input.substring(5));
             System.out.println("\tOK, I will mark this task as done");
             toDoList.get(number - 1).markAsDone();
             System.out.println("\t" + toDoList.get(number - 1).toString());
         } catch (NumberFormatException e) {
-            // Intentionally ignored because it is possible that the substring after "mark" is not a number
+            throw new InvalidMarkFormatException();
         }
     }
 
-    public static void unmarkTask(String input) {
+    public static void unmarkTask(String input) throws InvalidMarkFormatException {
         try {
             int number = Integer.parseInt(input.substring(7));
             System.out.println("\tOK, I will mark this task as not done");
             toDoList.get(number - 1).markAsNotDone();
             System.out.println("\t" + toDoList.get(number - 1).toString());
         } catch (NumberFormatException e) {
-            // Intentionally ignored because it is possible that the substring after "unmark" is not a number
+            throw new InvalidMarkFormatException();
         }
     }
 
@@ -107,9 +107,17 @@ public class Steven {
                     System.out.println(e.getMessage());
                 }
             } else if (input.startsWith("mark ")) {
-                markTask(input);
+                try {
+                    markTask(input);
+                } catch (InvalidMarkFormatException e) {
+                    System.out.println(e.getMessage());
+                }
             } else if (input.startsWith("unmark ")) {
-                unmarkTask(input);
+                try {
+                    unmarkTask(input);
+                } catch (InvalidMarkFormatException e) {
+                    System.out.println(e.getMessage());
+                }
             } else {
                 System.out.println("\t?????");
             }
