@@ -1,5 +1,5 @@
 public class InvalidMarkFormatException extends StevenException {
     public InvalidMarkFormatException() {
-        super("Pls use the correct format for marking/unmarking tasks");
+        super("\tPls use the correct format for marking/unmarking tasks");
     }
 }

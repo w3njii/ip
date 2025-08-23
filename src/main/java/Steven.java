@@ -69,7 +69,11 @@ public class Steven {
 
     public static void markTask(String input) throws InvalidMarkFormatException {
         try {
-            int number = Integer.parseInt(input.substring(5));
+            int number = Integer.parseInt(input.substring(4).trim());
+            if (number > toDoList.size() || number < 1) {
+                System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
+                return;
+            }
             System.out.println("\tOK, I will mark this task as done");
             toDoList.get(number - 1).markAsDone();
             System.out.println("\t" + toDoList.get(number - 1).toString());
@@ -81,6 +85,10 @@ public class Steven {
     public static void unmarkTask(String input) throws InvalidMarkFormatException {
         try {
             int number = Integer.parseInt(input.substring(7));
+            if (number > toDoList.size() || number < 1) {
+                System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
+                return;
+            }
             System.out.println("\tOK, I will mark this task as not done");
             toDoList.get(number - 1).markAsNotDone();
             System.out.println("\t" + toDoList.get(number - 1).toString());
@@ -106,13 +114,13 @@ public class Steven {
                 } catch (StevenException e) {
                     System.out.println(e.getMessage());
                 }
-            } else if (input.startsWith("mark ")) {
+            } else if (input.startsWith("mark")) {
                 try {
                     markTask(input);
                 } catch (InvalidMarkFormatException e) {
                     System.out.println(e.getMessage());
                 }
-            } else if (input.startsWith("unmark ")) {
+            } else if (input.startsWith("unmark")) {
                 try {
                     unmarkTask(input);
                 } catch (InvalidMarkFormatException e) {
