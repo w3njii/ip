@@ -16,12 +16,11 @@ public class Steven {
         }
     }
 
-    private static void addTask(String input) {
+    private static void addTask(String input) throws StevenException {
         if (input.startsWith("todo")) {
-            String description = input.substring(5);
+            String description = input.substring(4);
             if (description.trim().isEmpty()) {
-                System.out.println("\tWhr is your description???");
-                return;
+                throw new EmptyDescriptionException();
             }
             Task currentTask = new ToDo(description);
             toDoList.add(currentTask);
@@ -30,8 +29,7 @@ public class Steven {
         } else if (input.startsWith("deadline")) {
             String descriptionAndDeadline = input.substring(8);
             if (descriptionAndDeadline.trim().isEmpty()) {
-                System.out.println("\tWhr is your description???");
-                return;
+                throw new EmptyDescriptionException();
             }
             int byIndex = descriptionAndDeadline.indexOf(" /by ");
             if (byIndex == -1) {
@@ -51,8 +49,7 @@ public class Steven {
         } else if (input.startsWith("event")) {
             String descriptionAndTime = input.substring(5);
             if (descriptionAndTime.trim().isEmpty()) {
-                System.out.println("\tWhr is your description???");
-                return;
+                throw new EmptyDescriptionException();
             }
             int fromIndex = descriptionAndTime.indexOf(" /from ");
             int toIndex = descriptionAndTime.indexOf(" /to ");
@@ -108,7 +105,11 @@ public class Steven {
             } else if (input.equals("list")) {
                 printList();
             } else if (input.startsWith("todo") || input.startsWith("deadline") || input.startsWith("event")) {
-                addTask(input);
+                try {
+                    addTask(input);
+                } catch (StevenException e) {
+                    System.out.println(e.getMessage());
+                }
             } else if (input.startsWith("mark ")) {
                 markTask(input);
             } else if (input.startsWith("unmark ")) {
