@@ -20,7 +20,7 @@ public class Steven {
             if (input.equals("bye")) {
                 break;
             } else if (input.equals("list")) {
-                System.out.println("\t Here are the tasks in your list: ");
+                System.out.println("\tHere are the tasks in your list: ");
                 for (int i = 0; i < toDoList.size(); i++) {
                     System.out.println("\t\t" + (i + 1) + ". " + toDoList.get(i).toString());
                 }
@@ -76,10 +76,10 @@ public class Steven {
                 System.out.println("\tOK, I've added this task: " +  currentTask);
                 System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
             }
+            System.out.println(HORIZONTAL_LINE);
         }
 
         scanner.close();
-        System.out.println(HORIZONTAL_LINE);
-        System.out.println(GOODBYE);
+        System.out.println("\t" + GOODBYE);
     }
 }
