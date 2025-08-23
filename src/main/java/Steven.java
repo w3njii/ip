@@ -33,8 +33,7 @@ public class Steven {
             }
             int byIndex = descriptionAndDeadline.indexOf(" /by ");
             if (byIndex == -1) {
-                System.out.println("\tPls use the correct format for deadline task");
-                return;
+                throw new InvalidTaskFormatException("deadline");
             }
             String description = descriptionAndDeadline.substring(0, byIndex);
             String deadline = descriptionAndDeadline.substring(byIndex + 5);
@@ -54,8 +53,7 @@ public class Steven {
             int fromIndex = descriptionAndTime.indexOf(" /from ");
             int toIndex = descriptionAndTime.indexOf(" /to ");
             if (fromIndex == -1 || toIndex == -1 || toIndex <= fromIndex) {
-                System.out.println("\tPls use the correct format for event task");
-                return;
+                throw new InvalidTaskFormatException("event");
             }
             String description = descriptionAndTime.substring(0, fromIndex);
             String from = descriptionAndTime.substring(fromIndex + 7, toIndex);
