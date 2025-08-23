@@ -38,8 +38,7 @@ public class Steven {
             String description = descriptionAndDeadline.substring(0, byIndex);
             String deadline = descriptionAndDeadline.substring(byIndex + 5);
             if (deadline.trim().isEmpty()) {
-                System.out.println("\tWhr is your deadline???");
-                return;
+                throw new MissingDeadlineException();
             }
             Task currentTask = new Deadline(description, deadline);
             toDoList.add(currentTask);
