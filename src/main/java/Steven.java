@@ -16,55 +16,57 @@ public class Steven {
         }
     }
 
-    private static void addTask(String input) throws StevenException {
-        if (input.startsWith("todo")) {
-            String description = input.substring(4);
-            if (description.trim().isEmpty()) {
-                throw new EmptyDescriptionException();
-            }
-            Task currentTask = new ToDo(description);
-            toDoList.add(currentTask);
-            System.out.println("\tOK, I've added this task: " + currentTask);
-            System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
-        } else if (input.startsWith("deadline")) {
-            String descriptionAndDeadline = input.substring(8);
-            if (descriptionAndDeadline.trim().isEmpty()) {
-                throw new EmptyDescriptionException();
-            }
-            int byIndex = descriptionAndDeadline.indexOf(" /by ");
-            if (byIndex == -1) {
-                throw new InvalidTaskFormatException("deadline");
-            }
-            String description = descriptionAndDeadline.substring(0, byIndex);
-            String deadline = descriptionAndDeadline.substring(byIndex + 5);
-            if (deadline.trim().isEmpty()) {
-                throw new MissingDeadlineException();
-            }
-            Task currentTask = new Deadline(description, deadline);
-            toDoList.add(currentTask);
-            System.out.println("\tOK, I've added this task: " + currentTask);
-            System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
-        } else if (input.startsWith("event")) {
-            String descriptionAndTime = input.substring(5);
-            if (descriptionAndTime.trim().isEmpty()) {
-                throw new EmptyDescriptionException();
-            }
-            int fromIndex = descriptionAndTime.indexOf(" /from ");
-            int toIndex = descriptionAndTime.indexOf(" /to ");
-            if (fromIndex == -1 || toIndex == -1 || toIndex <= fromIndex) {
-                throw new InvalidTaskFormatException("event");
-            }
-            String description = descriptionAndTime.substring(0, fromIndex);
-            String from = descriptionAndTime.substring(fromIndex + 7, toIndex);
-            String to = descriptionAndTime.substring(toIndex + 5);
-            if (from.trim().isEmpty() || to.trim().isEmpty()) {
-                throw new MissingStartAndEndTimeException();
-            }
-            Task currentTask = new Event(description, from, to);
-            toDoList.add(currentTask);
-            System.out.println("\tOK, I've added this task: " + currentTask);
-            System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+    private static void addToDoTask(String input) throws StevenException {
+        String description = input.substring(4);
+        if (description.trim().isEmpty()) {
+            throw new EmptyDescriptionException();
         }
+        Task currentTask = new ToDo(description);
+        toDoList.add(currentTask);
+        System.out.println("\tOK, I've added this task: " + currentTask);
+        System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+    }
+
+    private static void addDeadlineTask(String input) throws StevenException {
+        String descriptionAndDeadline = input.substring(8);
+        if (descriptionAndDeadline.trim().isEmpty()) {
+            throw new EmptyDescriptionException();
+        }
+        int byIndex = descriptionAndDeadline.indexOf(" /by ");
+        if (byIndex == -1) {
+            throw new InvalidTaskFormatException("deadline");
+        }
+        String description = descriptionAndDeadline.substring(0, byIndex);
+        String deadline = descriptionAndDeadline.substring(byIndex + 5);
+        if (deadline.trim().isEmpty()) {
+            throw new MissingDeadlineException();
+        }
+        Task currentTask = new Deadline(description, deadline);
+        toDoList.add(currentTask);
+        System.out.println("\tOK, I've added this task: " + currentTask);
+        System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+    }
+
+    public static void addEventTask(String input) throws StevenException {
+        String descriptionAndTime = input.substring(5);
+        if (descriptionAndTime.trim().isEmpty()) {
+            throw new EmptyDescriptionException();
+        }
+        int fromIndex = descriptionAndTime.indexOf(" /from ");
+        int toIndex = descriptionAndTime.indexOf(" /to ");
+        if (fromIndex == -1 || toIndex == -1 || toIndex <= fromIndex) {
+            throw new InvalidTaskFormatException("event");
+        }
+        String description = descriptionAndTime.substring(0, fromIndex);
+        String from = descriptionAndTime.substring(fromIndex + 7, toIndex);
+        String to = descriptionAndTime.substring(toIndex + 5);
+        if (from.trim().isEmpty() || to.trim().isEmpty()) {
+            throw new MissingStartAndEndTimeException();
+        }
+        Task currentTask = new Event(description, from, to);
+        toDoList.add(currentTask);
+        System.out.println("\tOK, I've added this task: " + currentTask);
+        System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
     }
 
     public static void deleteTask(String input) {
@@ -128,38 +130,67 @@ public class Steven {
 
         while (true) {
             String input = scanner.nextLine();
+            Command command = Command.convert(input.split(" ")[0]);
 
-            if (input.equals("bye")) {
-                break;
-            } else if (input.equals("list")) {
-                printList();
-            } else if (input.startsWith("todo") || input.startsWith("deadline") || input.startsWith("event")) {
-                try {
-                    addTask(input);
-                } catch (StevenException e) {
-                    System.out.println(e.getMessage());
-                }
-            } else if (input.startsWith("mark")) {
-                try {
-                    markTask(input);
-                } catch (InvalidMarkFormatException e) {
-                    System.out.println(e.getMessage());
-                }
-            } else if (input.startsWith("unmark")) {
-                try {
-                    unmarkTask(input);
-                } catch (InvalidMarkFormatException e) {
-                    System.out.println(e.getMessage());
-                }
-            } else if (input.startsWith("delete")) {
-                deleteTask(input);
-            } else {
-                System.out.println("\t?????");
+            switch (command) {
+                case BYE:
+                    scanner.close();
+                    System.out.println("\t" + GOODBYE);
+                    return;
+
+                case LIST:
+                    printList();
+                    break;
+
+                case TODO:
+                    try {
+                        addToDoTask(input);
+                    } catch (StevenException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case DEADLINE:
+                    try {
+                        addDeadlineTask(input);
+                    } catch (StevenException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case EVENT:
+                    try {
+                        addEventTask(input);
+                    } catch (StevenException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case MARK:
+                    try {
+                        markTask(input);
+                    } catch (InvalidMarkFormatException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case UNMARK:
+                    try {
+                        unmarkTask(input);
+                    } catch (InvalidMarkFormatException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+                case DELETE:
+                    deleteTask(input);
+                    break;
+
+                case UNKNOWN:
+                    System.out.println("\t?????");
+                    break;
             }
             System.out.println(HORIZONTAL_LINE);
         }
-
-        scanner.close();
-        System.out.println("\t" + GOODBYE);
     }
 }
