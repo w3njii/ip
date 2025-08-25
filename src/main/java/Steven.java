@@ -133,62 +133,62 @@ public class Steven {
             Command command = Command.convert(input.split(" ")[0]);
 
             switch (command) {
-                case BYE:
-                    scanner.close();
-                    System.out.println("\t" + GOODBYE);
-                    return;
+            case BYE:
+                scanner.close();
+                System.out.println("\t" + GOODBYE);
+                return;
 
-                case LIST:
-                    printList();
-                    break;
+            case LIST:
+                printList();
+                break;
 
-                case TODO:
-                    try {
-                        addToDoTask(input);
-                    } catch (StevenException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
+            case TODO:
+                try {
+                    addToDoTask(input);
+                } catch (StevenException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
 
-                case DEADLINE:
-                    try {
-                        addDeadlineTask(input);
-                    } catch (StevenException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
+            case DEADLINE:
+                try {
+                    addDeadlineTask(input);
+                } catch (StevenException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
 
-                case EVENT:
-                    try {
-                        addEventTask(input);
-                    } catch (StevenException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
+            case EVENT:
+                try {
+                    addEventTask(input);
+                } catch (StevenException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
 
-                case MARK:
-                    try {
-                        markTask(input);
-                    } catch (InvalidMarkFormatException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
+            case MARK:
+                try {
+                    markTask(input);
+                } catch (InvalidMarkFormatException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
 
-                case UNMARK:
-                    try {
-                        unmarkTask(input);
-                    } catch (InvalidMarkFormatException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
+            case UNMARK:
+                try {
+                    unmarkTask(input);
+                } catch (InvalidMarkFormatException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
 
-                case DELETE:
-                    deleteTask(input);
-                    break;
+            case DELETE:
+                deleteTask(input);
+                break;
 
-                case UNKNOWN:
-                    System.out.println("\t?????");
-                    break;
+            case UNKNOWN:
+                System.out.println("\t?????");
+                break;
             }
             System.out.println(HORIZONTAL_LINE);
         }
