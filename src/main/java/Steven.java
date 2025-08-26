@@ -22,7 +22,7 @@ public class Steven {
     }
 
     private static void addToDoTask(String input) throws StevenException {
-        String description = input.substring(4);
+        String description = input.substring(5);
         if (description.trim().isEmpty()) {
             throw new EmptyDescriptionException();
         }
@@ -33,7 +33,7 @@ public class Steven {
     }
 
     private static void addDeadlineTask(String input) throws StevenException {
-        String descriptionAndDeadline = input.substring(8);
+        String descriptionAndDeadline = input.substring(9);
         if (descriptionAndDeadline.trim().isEmpty()) {
             throw new EmptyDescriptionException();
         }
@@ -53,7 +53,7 @@ public class Steven {
     }
 
     public static void addEventTask(String input) throws StevenException {
-        String descriptionAndTime = input.substring(5);
+        String descriptionAndTime = input.substring(6);
         if (descriptionAndTime.trim().isEmpty()) {
             throw new EmptyDescriptionException();
         }
@@ -87,7 +87,7 @@ public class Steven {
             }
             Task deletedTask = toDoList.remove(number - 1);
             System.out.println("\tOK, DELETE THIS ONE ALR:\n\t" + deletedTask);
-            System.out.println("Now ur list got " + toDoList.size() + " task");
+            System.out.println("\tNow ur list got " + toDoList.size() + " task");
         } catch (NumberFormatException e) {
             System.out.println("Invalid input");
         }
