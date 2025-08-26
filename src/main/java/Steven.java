@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.StringBuilder;
 
 public class Steven {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
@@ -124,6 +127,20 @@ public class Steven {
         }
     }
 
+    public static void saveTasks() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Task task : toDoList) {
+            stringBuilder.append(task.toString()).append("\n");
+        }
+        try {
+            FileWriter fw = new FileWriter("data/tasklist.txt");
+            fw.write(stringBuilder.toString());
+            fw.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println(GREETING);
         System.out.println(HORIZONTAL_LINE);
@@ -136,6 +153,7 @@ public class Steven {
             case BYE:
                 scanner.close();
                 System.out.println("\t" + GOODBYE);
+                saveTasks();
                 return;
 
             case LIST:

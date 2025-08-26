@@ -1,0 +1,3 @@
+[T][ ]  task
+[D][ ]  later (by: wednesday)
+[E][ ]  event (from: now to: then)
