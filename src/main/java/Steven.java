@@ -1,7 +1,9 @@
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
+import java.util.Scanner;
+import java.util.ArrayList;
 import java.lang.StringBuilder;
 
 public class Steven {
@@ -141,9 +143,44 @@ public class Steven {
         }
     }
 
+    public static void fetchTasks() {
+        File f = new File("data/tasklist.txt");
+        try {
+            Scanner taskScanner = new Scanner(f);
+            while (taskScanner.hasNextLine()) {
+                String currentTask = taskScanner.nextLine();
+                loadTask(currentTask);
+            }
+            taskScanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void loadTask(String task) {
+        if (task.startsWith("[T]")) {
+            toDoList.add(new ToDo(task.substring(7)));
+        } else if (task.startsWith("[D]")) {
+            int byIndex = task.indexOf(" (by:");
+            String description = task.substring(7, byIndex);
+            String by = task.substring(byIndex + 6, task.indexOf(")"));
+            toDoList.add(new Deadline(description, by));
+        } else if (task.startsWith("[E]")) {
+            int fromIndex = task.indexOf(" (from:");
+            int toIndex = task.indexOf(" to:");
+            String description = task.substring(7, fromIndex);
+            String from = task.substring(fromIndex + 8, toIndex);
+            String to = task.substring(toIndex + 5, task.indexOf(")"));
+            toDoList.add(new Event(description, from, to));
+        } if (task.startsWith("[X]", 3)) {
+            toDoList.get(toDoList.size() - 1).markAsDone();
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println(GREETING);
         System.out.println(HORIZONTAL_LINE);
+        fetchTasks();
 
         while (true) {
             String input = scanner.nextLine();
