@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
+    private final String startTimeString;
+    private final String endTimeString;
 
     /**
      * Creates a new event task with the given description, start time, and end time.
@@ -31,6 +33,8 @@ public class Event extends Task {
      */
     public Event(String description, String startTime, String endTime) {
         super(description);
+        this.startTimeString = startTime;
+        this.endTimeString = endTime;
         int startDay = Integer.parseInt(startTime.substring(0, 2));
         int startMonth = Integer.parseInt(startTime.substring(3, 5));
         int startYear = Integer.parseInt(startTime.substring(6, 10));
@@ -43,6 +47,15 @@ public class Event extends Task {
         int endHour = Integer.parseInt(endTime.substring(11, 13));
         int endMinute = Integer.parseInt(endTime.substring(13, 15));
         this.endTime = LocalDateTime.of(endYear, endMonth, endDay, endHour, endMinute);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String convertToSaveFormat() {
+        return "[E]" + super.convertToSaveFormat() + " (from: "  + this.startTimeString
+                + " to: " + this.endTimeString + ")";
     }
 
     /**

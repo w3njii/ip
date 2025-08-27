@@ -15,6 +15,14 @@ public class ToDo extends Task {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public String convertToSaveFormat() {
+        return "[T]" + super.convertToSaveFormat();
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * Additionally, adds a "[T]" at the front to represent "to-do" task.
      */

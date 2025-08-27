@@ -132,7 +132,7 @@ public class Steven {
     public static void saveTasks() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Task task : toDoList) {
-            stringBuilder.append(task.toString()).append("\n");
+            stringBuilder.append(task.convertToSaveFormat()).append("\n");
         }
         try {
             FileWriter fw = new FileWriter("data/tasklist.txt");

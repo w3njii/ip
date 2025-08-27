@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
     private final LocalDateTime deadline;
+    private final String deadlineString;
 
     /**
      * Creates a new deadline task with the given description and deadline.
@@ -30,6 +31,7 @@ public class Deadline extends Task {
 
     public Deadline(String description, String deadline) {
         super(description);
+        this.deadlineString = deadline;
         int day = Integer.parseInt(deadline.substring(0, 2));
         int month = Integer.parseInt(deadline.substring(3, 5));
         int year = Integer.parseInt(deadline.substring(6, 10));
@@ -37,6 +39,14 @@ public class Deadline extends Task {
         int minute = Integer.parseInt(deadline.substring(13, 15));
         this.deadline = LocalDateTime.of(year, month, day, hour, minute);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String convertToSaveFormat() {
+        return "[D]" + super.convertToSaveFormat() + " (by: " + this.deadlineString + ")";
+    }
+
 
     /**
      * {@inheritDoc}

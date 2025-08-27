@@ -42,6 +42,15 @@ public class Task {
     }
 
     /**
+     * Returns the string representation of the task in a local save format.
+     *
+     * @return the string representation of the task in a local save format
+     */
+    public String convertToSaveFormat() {
+        return (done ? "[X] " : "[ ] ") + description;
+    }
+
+    /**
      * Returns a string representation of this task, showing whether it
      * is completed and its description.
      *
