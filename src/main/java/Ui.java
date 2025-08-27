@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Ui {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
     private static final String GREETING = "Hello There! I'm Steven\nHow may I help you?";

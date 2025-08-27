@@ -1,16 +1,23 @@
 import java.util.Scanner;
 
 public class Steven {
-    private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
-        Ui ui = new Ui();
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Ui ui;
+
+    public Steven(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        tasks = new TaskList(storage.fetchTasks());
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
         ui.printGreeting();
         ui.printHorizontalLine();
 
         Parser parser = new Parser();
-        Storage storage = new Storage("data/tasklist.txt");
-        TaskList taskList = new TaskList(storage.fetchTasks());
 
         while (true) {
             String input = scanner.nextLine();
@@ -24,12 +31,12 @@ public class Steven {
                 return;
 
             case LIST:
-                taskList.printToDoList();
+                tasks.printToDoList();
                 break;
 
             case TODO:
                 try {
-                    taskList.addToDoTask(input);
+                    tasks.addToDoTask(input);
                 } catch (StevenException e) {
                     System.out.println(e.getMessage());
                 }
@@ -37,7 +44,7 @@ public class Steven {
 
             case DEADLINE:
                 try {
-                    taskList.addDeadlineTask(input);
+                    tasks.addDeadlineTask(input);
                 } catch (StevenException e) {
                     System.out.println(e.getMessage());
                 }
@@ -45,7 +52,7 @@ public class Steven {
 
             case EVENT:
                 try {
-                    taskList.addEventTask(input);
+                    tasks.addEventTask(input);
                 } catch (StevenException e) {
                     System.out.println(e.getMessage());
                 }
@@ -53,7 +60,7 @@ public class Steven {
 
             case MARK:
                 try {
-                    taskList.markTask(input);
+                    tasks.markTask(input);
                 } catch (InvalidMarkFormatException e) {
                     System.out.println(e.getMessage());
                 }
@@ -61,14 +68,14 @@ public class Steven {
 
             case UNMARK:
                 try {
-                    taskList.unmarkTask(input);
+                    tasks.unmarkTask(input);
                 } catch (InvalidMarkFormatException e) {
                     System.out.println(e.getMessage());
                 }
                 break;
 
             case DELETE:
-                taskList.deleteTask(input);
+                tasks.deleteTask(input);
                 break;
 
             case UNKNOWN:
@@ -77,5 +84,8 @@ public class Steven {
             }
             ui.printHorizontalLine();
         }
+    }
+    public static void main(String[] args) {
+        new Steven("data/tasklist.txt").run();
     }
 }
