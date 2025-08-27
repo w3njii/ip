@@ -29,15 +29,19 @@ public class Deadline extends Task {
      * @param deadline    the deadline string in the specified format
      */
 
-    public Deadline(String description, String deadline) {
+    public Deadline(String description, String deadline) throws InvalidDateAndTimeFormatException {
         super(description);
-        this.deadlineString = deadline;
-        int day = Integer.parseInt(deadline.substring(0, 2));
-        int month = Integer.parseInt(deadline.substring(3, 5));
-        int year = Integer.parseInt(deadline.substring(6, 10));
-        int hour = Integer.parseInt(deadline.substring(11, 13));
-        int minute = Integer.parseInt(deadline.substring(13, 15));
-        this.deadline = LocalDateTime.of(year, month, day, hour, minute);
+        try {
+            this.deadlineString = deadline;
+            int day = Integer.parseInt(deadline.substring(0, 2));
+            int month = Integer.parseInt(deadline.substring(3, 5));
+            int year = Integer.parseInt(deadline.substring(6, 10));
+            int hour = Integer.parseInt(deadline.substring(11, 13));
+            int minute = Integer.parseInt(deadline.substring(13, 15));
+            this.deadline = LocalDateTime.of(year, month, day, hour, minute);
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+            throw new InvalidDateAndTimeFormatException();
+        }
     }
 
     /**
