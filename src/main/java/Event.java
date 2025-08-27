@@ -31,22 +31,26 @@ public class Event extends Task {
      * @param startTime   the start time string in the specified format
      * @param endTime     the end time string in the specified format
      */
-    public Event(String description, String startTime, String endTime) {
+    public Event(String description, String startTime, String endTime) throws InvalidDateAndTimeFormatException {
         super(description);
-        this.startTimeString = startTime;
-        this.endTimeString = endTime;
-        int startDay = Integer.parseInt(startTime.substring(0, 2));
-        int startMonth = Integer.parseInt(startTime.substring(3, 5));
-        int startYear = Integer.parseInt(startTime.substring(6, 10));
-        int startHour = Integer.parseInt(startTime.substring(11, 13));
-        int startMinute = Integer.parseInt(startTime.substring(13, 15));
-        this.startTime = LocalDateTime.of(startYear, startMonth, startDay, startHour, startMinute);
-        int endDay = Integer.parseInt(endTime.substring(0, 2));
-        int endMonth = Integer.parseInt(endTime.substring(3, 5));
-        int endYear = Integer.parseInt(endTime.substring(6, 10));
-        int endHour = Integer.parseInt(endTime.substring(11, 13));
-        int endMinute = Integer.parseInt(endTime.substring(13, 15));
-        this.endTime = LocalDateTime.of(endYear, endMonth, endDay, endHour, endMinute);
+        try {
+            this.startTimeString = startTime;
+            this.endTimeString = endTime;
+            int startDay = Integer.parseInt(startTime.substring(0, 2));
+            int startMonth = Integer.parseInt(startTime.substring(3, 5));
+            int startYear = Integer.parseInt(startTime.substring(6, 10));
+            int startHour = Integer.parseInt(startTime.substring(11, 13));
+            int startMinute = Integer.parseInt(startTime.substring(13, 15));
+            this.startTime = LocalDateTime.of(startYear, startMonth, startDay, startHour, startMinute);
+            int endDay = Integer.parseInt(endTime.substring(0, 2));
+            int endMonth = Integer.parseInt(endTime.substring(3, 5));
+            int endYear = Integer.parseInt(endTime.substring(6, 10));
+            int endHour = Integer.parseInt(endTime.substring(11, 13));
+            int endMinute = Integer.parseInt(endTime.substring(13, 15));
+            this.endTime = LocalDateTime.of(endYear, endMonth, endDay, endHour, endMinute);
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+            throw new InvalidDateAndTimeFormatException();
+        }
     }
 
     /**
