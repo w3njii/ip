@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a task that start at a specific date/time and ends at a specific date/time.
@@ -51,6 +52,8 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.startTime + " to: " + this.endTime + ")";
+        return "[E]" + super.toString() + " (from: "
+                + this.startTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm"))
+                + " to: " + this.endTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm")) + ")";
     }
 }
