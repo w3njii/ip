@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 public class TaskList {
-    private static final ArrayList<Task> toDoList = new ArrayList<>();
+    public static final ArrayList<Task> toDoList = new ArrayList<>();
+
 
     public void addToDoTask(String input) throws StevenException {
         String description = input.substring(4).trim();
