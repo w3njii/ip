@@ -1,35 +1,66 @@
 Hello There! I'm Steven
 How may I help you?
 ____________________________________________________________
-	?????
-____________________________________________________________
-	?????
-____________________________________________________________
-	Here are the tasks in your list: 
-____________________________________________________________
-	You only have 0 tasks in your list
-____________________________________________________________
-	?????
-____________________________________________________________
-	You only have 0 tasks in your list
-____________________________________________________________
-	You only have 0 tasks in your list
-____________________________________________________________
-	OK, I've added this task: [T][ ]  borrow book
+data/tasklist.txt (No such file or directory)
+	OK, I've added this task: [D][ ] return book (by: 20 Sept 2023 12:34)
 	Now there are 1 tasks in your list: 
 ____________________________________________________________
-	Here are the tasks in your list: 
-		1. [T][ ]  borrow book
-____________________________________________________________
-	OK, I've added this task: [D][ ]  return book (by: Sunday)
+	OK, I've added this task: [E][ ] some event (from: 16 Sept 2025 00:00 to: 17 Sept 2025 00:00)
 	Now there are 2 tasks in your list: 
 ____________________________________________________________
-	OK, I've added this task: [E][ ]  project meeting (from: Mon 2pm to: 4pm)
+	OK, I've added this task: [T][ ] some task
 	Now there are 3 tasks in your list: 
 ____________________________________________________________
 	Here are the tasks in your list: 
-		1. [T][ ]  borrow book
-		2. [D][ ]  return book (by: Sunday)
-		3. [E][ ]  project meeting (from: Mon 2pm to: 4pm)
+		1. [D][ ] return book (by: 20 Sept 2023 12:34)
+		2. [E][ ] some event (from: 16 Sept 2025 00:00 to: 17 Sept 2025 00:00)
+		3. [T][ ] some task
+____________________________________________________________
+	OK, I will mark this task as done
+	[D][X] return book (by: 20 Sept 2023 12:34)
+____________________________________________________________
+	Here are the tasks in your list: 
+		1. [D][X] return book (by: 20 Sept 2023 12:34)
+		2. [E][ ] some event (from: 16 Sept 2025 00:00 to: 17 Sept 2025 00:00)
+		3. [T][ ] some task
+____________________________________________________________
+	You only have 3 tasks in your list
+____________________________________________________________
+	Here are the tasks in your list: 
+		1. [D][X] return book (by: 20 Sept 2023 12:34)
+		2. [E][ ] some event (from: 16 Sept 2025 00:00 to: 17 Sept 2025 00:00)
+		3. [T][ ] some task
+____________________________________________________________
+	Pls use the correct format for marking/unmarking tasks
+____________________________________________________________
+	Whr is your description????
+____________________________________________________________
+	Whr is your description????
+____________________________________________________________
+	Whr is your description????
+____________________________________________________________
+	Pls use the correct format for date and time, the format is dd-mm-yyyy tttt
+	dd: day
+	mm: month
+	yy: year
+	tttt: time in 24-hour format, do not use colon (:)
+____________________________________________________________
+	Pls use the correct format for date and time, the format is dd-mm-yyyy tttt
+	dd: day
+	mm: month
+	yy: year
+	tttt: time in 24-hour format, do not use colon (:)
+____________________________________________________________
+	Pls use the correct format for date and time, the format is dd-mm-yyyy tttt
+	dd: day
+	mm: month
+	yy: year
+	tttt: time in 24-hour format, do not use colon (:)
+____________________________________________________________
+	Here are the tasks in your list: 
+		1. [D][X] return book (by: 20 Sept 2023 12:34)
+		2. [E][ ] some event (from: 16 Sept 2025 00:00 to: 17 Sept 2025 00:00)
+		3. [T][ ] some task
 ____________________________________________________________
 	Bye.
+data/tasklist.txt (No such file or directory)

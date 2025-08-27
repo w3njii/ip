@@ -1,13 +1,17 @@
-read book
-return book
+deadline return book /by 20-09-2023 1234
+event some event /from 16-09-2025 0000 /to 17-09-2025 0000
+todo some task
 list
-mark 2
-read book again
-mark 3
-unmark 2
-todo borrow book
+mark 1
 list
-deadline return book /by Sunday
-event project meeting /from Mon 2pm /to 4pm
+mark 4
+list
+mark
+deadline
+todo
+event
+deadline return book /by s
+event e /from s /to 17-09-2025 0000
+event e /from 17-09-2025 0000 /to s
 list
 bye

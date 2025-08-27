@@ -22,8 +22,8 @@ public class Steven {
     }
 
     private static void addToDoTask(String input) throws StevenException {
-        String description = input.substring(5);
-        if (description.trim().isEmpty()) {
+        String description = input.substring(4).trim();
+        if (description.isEmpty()) {
             throw new EmptyDescriptionException();
         }
         Task currentTask = new ToDo(description);
@@ -33,8 +33,8 @@ public class Steven {
     }
 
     private static void addDeadlineTask(String input) throws StevenException {
-        String descriptionAndDeadline = input.substring(9);
-        if (descriptionAndDeadline.trim().isEmpty()) {
+        String descriptionAndDeadline = input.substring(8).trim();
+        if (descriptionAndDeadline.isEmpty()) {
             throw new EmptyDescriptionException();
         }
         int byIndex = descriptionAndDeadline.indexOf(" /by ");
@@ -53,8 +53,8 @@ public class Steven {
     }
 
     public static void addEventTask(String input) throws StevenException {
-        String descriptionAndTime = input.substring(6);
-        if (descriptionAndTime.trim().isEmpty()) {
+        String descriptionAndTime = input.substring(5).trim();
+        if (descriptionAndTime.isEmpty()) {
             throw new EmptyDescriptionException();
         }
         int fromIndex = descriptionAndTime.indexOf(" /from ");
@@ -132,7 +132,7 @@ public class Steven {
     public static void saveTasks() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Task task : toDoList) {
-            stringBuilder.append(task.toString()).append("\n");
+            stringBuilder.append(task.convertToSaveFormat()).append("\n");
         }
         try {
             FileWriter fw = new FileWriter("data/tasklist.txt");
@@ -158,22 +158,27 @@ public class Steven {
     }
 
     public static void loadTask(String task) {
-        if (task.startsWith("[T]")) {
-            toDoList.add(new ToDo(task.substring(7)));
-        } else if (task.startsWith("[D]")) {
-            int byIndex = task.indexOf(" (by:");
-            String description = task.substring(7, byIndex);
-            String by = task.substring(byIndex + 6, task.indexOf(")"));
-            toDoList.add(new Deadline(description, by));
-        } else if (task.startsWith("[E]")) {
-            int fromIndex = task.indexOf(" (from:");
-            int toIndex = task.indexOf(" to:");
-            String description = task.substring(7, fromIndex);
-            String from = task.substring(fromIndex + 8, toIndex);
-            String to = task.substring(toIndex + 5, task.indexOf(")"));
-            toDoList.add(new Event(description, from, to));
-        } if (task.startsWith("[X]", 3)) {
-            toDoList.get(toDoList.size() - 1).markAsDone();
+        try {
+            if (task.startsWith("[T]")) {
+                toDoList.add(new ToDo(task.substring(7)));
+            } else if (task.startsWith("[D]")) {
+                int byIndex = task.indexOf(" (by:");
+                String description = task.substring(7, byIndex);
+                String by = task.substring(byIndex + 6, task.indexOf(")"));
+                toDoList.add(new Deadline(description, by));
+            } else if (task.startsWith("[E]")) {
+                int fromIndex = task.indexOf(" (from:");
+                int toIndex = task.indexOf(" to:");
+                String description = task.substring(7, fromIndex);
+                String from = task.substring(fromIndex + 8, toIndex);
+                String to = task.substring(toIndex + 5, task.indexOf(")"));
+                toDoList.add(new Event(description, from, to));
+            }
+            if (task.startsWith("[X]", 3)) {
+                toDoList.get(toDoList.size() - 1).markAsDone();
+            }
+        } catch (InvalidDateAndTimeFormatException e) {
+            System.out.println(e.getMessage());
         }
     }
 
