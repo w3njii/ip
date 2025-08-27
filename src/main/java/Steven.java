@@ -7,19 +7,9 @@ import java.util.ArrayList;
 import java.lang.StringBuilder;
 
 public class Steven {
-    private static final String HORIZONTAL_LINE = "____________________________________________________________";
-    private static final String GREETING = "Hello There! I'm Steven\nHow may I help you?";
-    private static final String GOODBYE = "Bye.";
 
     private static final ArrayList<Task> toDoList = new ArrayList<>();
     private static final Scanner scanner = new Scanner(System.in);
-
-    private static void printList() {
-        System.out.println("\tHere are the tasks in your list: ");
-        for (int i = 0; i < toDoList.size(); i++) {
-            System.out.println("\t\t" + (i + 1) + ". " + toDoList.get(i).toString());
-        }
-    }
 
     private static void addToDoTask(String input) throws StevenException {
         String description = input.substring(4).trim();
@@ -183,8 +173,9 @@ public class Steven {
     }
 
     public static void main(String[] args) {
-        System.out.println(GREETING);
-        System.out.println(HORIZONTAL_LINE);
+        Ui ui = new Ui();
+        ui.printGreeting();
+        ui.printHorizontalLine();
         fetchTasks();
 
         while (true) {
@@ -194,12 +185,12 @@ public class Steven {
             switch (command) {
             case BYE:
                 scanner.close();
-                System.out.println("\t" + GOODBYE);
+                ui.printGoodbye();
                 saveTasks();
                 return;
 
             case LIST:
-                printList();
+                ui.printToDoList(toDoList);
                 break;
 
             case TODO:
@@ -250,7 +241,7 @@ public class Steven {
                 System.out.println("\t?????");
                 break;
             }
-            System.out.println(HORIZONTAL_LINE);
+            ui.printHorizontalLine();
         }
     }
 }
