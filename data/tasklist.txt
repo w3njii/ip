@@ -1,4 +1,0 @@
-[T][X] task
-[T][ ] task
-[D][ ] deadline task (by: then)
-[E][ ] event task (from: now to: then)
