@@ -1,6 +1,8 @@
+package steven;
+
 public class Ui {
     private static final String HORIZONTAL_LINE = "____________________________________________________________";
-    private static final String GREETING = "Hello There! I'm Steven\nHow may I help you?";
+    private static final String GREETING = "Hello There! I'm steven.Steven\nHow may I help you?";
     private static final String GOODBYE = "\tBye.";
 
     public void printHorizontalLine() {

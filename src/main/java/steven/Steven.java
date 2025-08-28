@@ -1,3 +1,5 @@
+package steven;
+
 import java.util.Scanner;
 
 public class Steven {
@@ -85,6 +87,7 @@ public class Steven {
             ui.printHorizontalLine();
         }
     }
+
     public static void main(String[] args) {
         new Steven("data/tasklist.txt").run();
     }
