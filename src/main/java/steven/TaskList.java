@@ -21,7 +21,7 @@ public class TaskList {
     }
 
     public void addDeadlineTask(String input) throws StevenException {
-        String descriptionAndDeadline = input.substring(8).trim();
+        String descriptionAndDeadline = input.substring(8).stripLeading();
         if (descriptionAndDeadline.isEmpty()) {
             throw new EmptyDescriptionException();
         }
@@ -41,7 +41,7 @@ public class TaskList {
     }
 
     public void addEventTask(String input) throws StevenException {
-        String descriptionAndTime = input.substring(5).trim();
+        String descriptionAndTime = input.substring(5).stripLeading();
         if (descriptionAndTime.isEmpty()) {
             throw new EmptyDescriptionException();
         }
@@ -53,7 +53,7 @@ public class TaskList {
         String description = descriptionAndTime.substring(0, fromIndex);
         String from = descriptionAndTime.substring(fromIndex + 7, toIndex);
         String to = descriptionAndTime.substring(toIndex + 5);
-        if (from.trim().isEmpty() || to.trim().isEmpty()) {
+        if (from.stripLeading().isEmpty() || to.stripLeading().isEmpty()) {
             throw new MissingStartAndEndTimeException();
         }
         Task currentTask = new Event(description, from, to);
@@ -116,6 +116,7 @@ public class TaskList {
             throw new InvalidMarkFormatException();
         }
     }
+
     public void printToDoList() {
         System.out.println("\tHere are the tasks in your list: ");
         for (int i = 0; i < toDoList.size(); i++) {
