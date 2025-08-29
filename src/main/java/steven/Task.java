@@ -8,6 +8,9 @@ package steven;
  * @author w3njii
  */
 public class Task {
+    private final String description;
+    private boolean isDone = false;
+
     /**
      * Creates a new task with the given description.
      *
@@ -18,28 +21,17 @@ public class Task {
     }
 
     /**
-     * Indicates whether the task is completed.
-     * Defaults to {@code false}.
-     */
-    private boolean done = false;
-
-    /**
-     * A short description of the task.
-     */
-    private final String description;
-
-    /**
      * Marks this task as completed.
      */
     public void markAsDone() {
-        done = true;
+        isDone = true;
     }
 
     /**
      * Marks this task as not completed.
      */
     public void markAsNotDone() {
-        done = false;
+        isDone = false;
     }
 
     /**
@@ -48,7 +40,7 @@ public class Task {
      * @return the string representation of the task in a local save format
      */
     public String convertToSaveFormat() {
-        return (done ? "[X] " : "[ ] ") + description;
+        return (isDone ? "[X] " : "[ ] ") + description;
     }
 
     /**
@@ -65,6 +57,6 @@ public class Task {
      */
     @Override
     public String toString() {
-        return (done ? "[X] " : "[ ] ") + description;
+        return (isDone ? "[X] " : "[ ] ") + description;
     }
 }
