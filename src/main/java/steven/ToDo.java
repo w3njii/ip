@@ -15,9 +15,6 @@ public class ToDo extends Task {
         super(description);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String convertToSaveFormat() {
         return "[T]" + super.convertToSaveFormat();

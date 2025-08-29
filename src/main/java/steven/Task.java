@@ -2,9 +2,8 @@ package steven;
 
 /**
  * Represents a task that can be marked as done or not done.
- *
- * <p>This class provides methods to update and check the
- * completion status of a task. Each task also has a description.</p>
+ * This class provides methods to update and check the
+ * completion status of a task. Each task also has a description.
  *
  * @author w3njii
  */

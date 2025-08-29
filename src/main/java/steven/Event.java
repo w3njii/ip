@@ -16,22 +16,13 @@ public class Event extends Task {
 
     /**
      * Creates a new event task with the given description, start time, and end time.
-     * <p>
-     * The start and end time must be provided in the format:
-     * <pre>
-     * dd-mm-yyyy tttt
-     * </pre>
-     * where:
-     * <ul>
-     *   <li><code>dd</code> — day</li>
-     *   <li><code>mm</code> — month</li>
-     *   <li><code>yyyy</code> — year</li>
-     *   <li><code>tttt</code> — time in 24-hour format</li>
-     * </ul>
+     * The start and end time must be provided in the format: dd-mm-yyyy tttt
+     * where dd is the day, mm is the month, yyyy is the year, and
+     * tttt is the time in 24-hour format.
      *
      * @param description the description of the task
-     * @param startTime   the start time string in the specified format
-     * @param endTime     the end time string in the specified format
+     * @param startTime the start time string in the specified format
+     * @param endTime the end time string in the specified format
      */
     public Event(String description, String startTime, String endTime) throws InvalidDateAndTimeFormatException {
         super(description);
@@ -55,9 +46,6 @@ public class Event extends Task {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String convertToSaveFormat() {
         return "[E]" + super.convertToSaveFormat() + " (from: "  + this.startTimeString
