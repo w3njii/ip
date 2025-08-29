@@ -21,7 +21,6 @@ public class Deadline extends Task {
      * @param description the description of the task
      * @param deadline the deadline string in the specified format
      */
-
     public Deadline(String description, String deadline) throws InvalidDateAndTimeFormatException {
         super(description);
         try {

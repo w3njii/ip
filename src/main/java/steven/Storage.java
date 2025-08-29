@@ -7,14 +7,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+/**
+ * The <code>Storage</code> class provides methods to save and load tasks
+ * to and from local storage in the form of text files.
+ *
+ * <p>The tasks are stored in an internal <code>ArrayList</code> that
+ * is managed by this class. Methods are provided to fetch tasks from
+ * a file, save tasks to a file, and load individual tasks into memory.</p>
+ */
 public class Storage {
-    String filePath;
+    private final String filePath;
     private final ArrayList<Task> toDoList = new ArrayList<>();
 
+    /**
+     * Creates a Storage instance that is able to read from and write to the specified file.
+     *
+     * @param filePath the filepath of the text file from the root folder
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Writes all tasks in the internal list to the specified file as text.
+     * Each task is converted to its save format before writing.
+     */
     public void saveTasks() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Task task : toDoList) {
@@ -29,6 +47,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Reads tasks from the specified file and populates the internal list.
+     *
+     * @return an ArrayList containing tasks read from local storage, returns an empty list if the file is not found
+     */
     public ArrayList<Task> fetchTasks() {
         File f = new File(this.filePath);
         try {
@@ -44,6 +67,11 @@ public class Storage {
         return toDoList;
     }
 
+    /**
+     * Parses a task string in its save format and adds the corresponding Task object to the internal list.
+     *
+     * @param task the text representation of a task in save format
+     */
     public void loadTask(String task) {
         try {
             if (task.startsWith("[T]")) {
