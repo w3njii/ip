@@ -176,4 +176,18 @@ public class TaskList {
             System.out.println("\t\t" + (i + 1) + ". " + toDoList.get(i).toString());
         }
     }
+
+    public void findTasks(String keyword) throws MissingFindKeywordException {
+        if (keyword.split(" ").length < 2) {
+            throw new MissingFindKeywordException();
+        }
+        System.out.println("Here are the matching tasks in your list: ");
+        int i = 1;
+        for (Task task : toDoList) {
+            if (task.toString().contains(keyword)) {
+                System.out.println("\t" + i + ". " + task);
+                i++;
+            }
+        }
+    }
 }

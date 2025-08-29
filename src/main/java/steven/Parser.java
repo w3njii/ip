@@ -12,6 +12,7 @@ public class Parser {
             case "delete" -> Command.DELETE;
             case "list" -> Command.LIST;
             case "bye" -> Command.BYE;
+            case "find" -> Command.FIND;
             default -> Command.UNKNOWN;
         };
     }

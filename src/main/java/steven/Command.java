@@ -5,5 +5,5 @@ package steven;
  * Each command corresponds to an action supported by the chatbot.
  */
 public enum Command {
-    BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, UNKNOWN
+    BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, UNKNOWN
 }

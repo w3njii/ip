@@ -44,7 +44,7 @@ public class Steven {
 
         while (true) {
             String input = scanner.nextLine();
-            Command command = parser.parse(input);
+            Command command = parser.parse(input.split(" ")[0]);
 
             switch (command) {
             case BYE:
@@ -99,6 +99,14 @@ public class Steven {
 
             case DELETE:
                 tasks.deleteTask(input);
+                break;
+
+            case FIND:
+                try {
+                    tasks.findTasks(input);
+                } catch (StevenException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
 
             case UNKNOWN:
