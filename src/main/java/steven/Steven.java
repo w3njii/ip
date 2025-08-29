@@ -23,7 +23,7 @@ public class Steven {
 
         while (true) {
             String input = scanner.nextLine();
-            Command command = parser.parse(input);
+            Command command = parser.parse(input.split(" ")[0]);
 
             switch (command) {
             case BYE:
@@ -78,6 +78,10 @@ public class Steven {
 
             case DELETE:
                 tasks.deleteTask(input);
+                break;
+
+            case FIND:
+                tasks.findTasks(input.substring(5));
                 break;
 
             case UNKNOWN:
