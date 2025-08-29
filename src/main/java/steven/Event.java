@@ -60,7 +60,7 @@ public class Event extends Task {
      */
     @Override
     public String convertToSaveFormat() {
-        return "[E]" + super.convertToSaveFormat() + " (from: "  + this.startTimeString
+        return "[E]" + super.convertToSaveFormat() + " (from: " + this.startTimeString
                 + " to: " + this.endTimeString + ")";
     }
 
