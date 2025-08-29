@@ -14,21 +14,12 @@ public class Deadline extends Task {
 
     /**
      * Creates a new deadline task with the given description and deadline.
-     * <p>
-     * The deadline must be provided in the format:
-     * <pre>
-     * dd-mm-yyyy tttt
-     * </pre>
-     * where:
-     * <ul>
-     *   <li><code>dd</code> — day</li>
-     *   <li><code>mm</code> — month</li>
-     *   <li><code>yyyy</code> — year</li>
-     *   <li><code>tttt</code> — time in 24-hour format</li>
-     * </ul>
+     * The deadline must be provided in the format: dd-mm-yyyy tttt
+     * where dd is the day, mm is the month, yyyy is the year, and
+     * tttt is the time in 24-hour format.
      *
      * @param description the description of the task
-     * @param deadline    the deadline string in the specified format
+     * @param deadline the deadline string in the specified format
      */
 
     public Deadline(String description, String deadline) throws InvalidDateAndTimeFormatException {
@@ -46,13 +37,10 @@ public class Deadline extends Task {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public String convertToSaveFormat() {
         return "[D]" + super.convertToSaveFormat() + " (by: " + this.deadlineString + ")";
     }
-
 
     /**
      * {@inheritDoc}
