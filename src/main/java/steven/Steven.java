@@ -81,7 +81,11 @@ public class Steven {
                 break;
 
             case FIND:
-                tasks.findTasks(input.substring(5));
+                try {
+                    tasks.findTasks(input);
+                } catch (StevenException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
 
             case UNKNOWN:
