@@ -17,6 +17,7 @@ public class Steven {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
+    private boolean isClosed = false;
     Parser parser = new Parser();
 
     /**
@@ -41,9 +42,9 @@ public class Steven {
         ui.printGreeting();
         ui.printHorizontalLine();
 
-        while (scanner.hasNext()) {
+        while (!isClosed) {
             String input = scanner.nextLine();
-            getResponse(input);
+            System.out.print(getResponse(input));
             ui.printHorizontalLine();
         }
         scanner.close();
@@ -60,6 +61,10 @@ public class Steven {
      * @return the response of the chatbot to the input
      */
     public String getResponse(String input) {
+        if (isClosed) {
+            return null;
+        }
+
         PrintStream originalOut = System.out;
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -73,6 +78,7 @@ public class Steven {
             case BYE:
                 ui.printGoodbye();
                 storage.saveTasks();
+                isClosed = true;
                 break;
 
             case LIST:
