@@ -20,9 +20,27 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
+    private Steven steven;
+
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+    }
+
+    public void setSteven(Steven steven) {
+        this.steven = steven;
+    }
+
+    /**
+     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
+     * the dialog container. Clears the user input after processing.
+     */
+    @FXML
+    private void handleUserInput() {
+        String input = userInput.getText();
+        String response = steven.getResponse(input);
+        dialogContainer.getChildren().addAll(new DialogBox(response));
+        userInput.clear();
     }
 }
 
