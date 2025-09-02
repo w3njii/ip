@@ -15,6 +15,8 @@ public class Steven {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
+    private Scanner scanner;
+    Parser parser;
 
     /**
      * Constructs a new Steven chatbot instance.
@@ -36,84 +38,88 @@ public class Steven {
      * All changes to tasks are persisted via the <code>Storage</code> class.</p>
      */
     public void run() {
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         ui.printGreeting();
         ui.printHorizontalLine();
 
-        Parser parser = new Parser();
+        parser = new Parser();
 
-        while (true) {
+        while (scanner.hasNext()) {
             String input = scanner.nextLine();
-            Command command = parser.parse(input.split(" ")[0]);
-
-            switch (command) {
-            case BYE:
-                scanner.close();
-                ui.printGoodbye();
-                storage.saveTasks();
-                return;
-
-            case LIST:
-                tasks.printToDoList();
-                break;
-
-            case TODO:
-                try {
-                    tasks.addToDoTask(input);
-                } catch (StevenException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case DEADLINE:
-                try {
-                    tasks.addDeadlineTask(input);
-                } catch (StevenException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case EVENT:
-                try {
-                    tasks.addEventTask(input);
-                } catch (StevenException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case MARK:
-                try {
-                    tasks.markTask(input);
-                } catch (InvalidMarkFormatException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case UNMARK:
-                try {
-                    tasks.unmarkTask(input);
-                } catch (InvalidMarkFormatException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case DELETE:
-                tasks.deleteTask(input);
-                break;
-
-            case FIND:
-                try {
-                    tasks.findTasks(input);
-                } catch (StevenException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case UNKNOWN:
-                System.out.println("\t?????");
-                break;
-            }
+            getResponse(input);
             ui.printHorizontalLine();
+        }
+        scanner.close();
+    }
+
+    public void getResponse(String input) {
+        Command command = parser.parse(input.split(" ")[0]);
+
+        switch (command) {
+        case BYE:
+            ui.printGoodbye();
+            storage.saveTasks();
+            return;
+
+        case LIST:
+            tasks.printToDoList();
+            break;
+
+        case TODO:
+            try {
+                tasks.addToDoTask(input);
+            } catch (StevenException e) {
+                System.out.println(e.getMessage());
+            }
+            break;
+
+        case DEADLINE:
+            try {
+                tasks.addDeadlineTask(input);
+            } catch (StevenException e) {
+                System.out.println(e.getMessage());
+            }
+            break;
+
+        case EVENT:
+            try {
+                tasks.addEventTask(input);
+            } catch (StevenException e) {
+                System.out.println(e.getMessage());
+            }
+            break;
+
+        case MARK:
+            try {
+                tasks.markTask(input);
+            } catch (InvalidMarkFormatException e) {
+                System.out.println(e.getMessage());
+            }
+            break;
+
+        case UNMARK:
+            try {
+                tasks.unmarkTask(input);
+            } catch (InvalidMarkFormatException e) {
+                System.out.println(e.getMessage());
+            }
+            break;
+
+        case DELETE:
+            tasks.deleteTask(input);
+            break;
+
+        case FIND:
+            try {
+                tasks.findTasks(input);
+            } catch (StevenException e) {
+                System.out.println(e.getMessage());
+            }
+            break;
+
+        case UNKNOWN:
+            System.out.println("\t?????");
+            break;
         }
     }
 
