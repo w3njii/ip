@@ -152,6 +152,15 @@ public class Steven {
     }
 
     /**
+     * Returns the greeting of the chatbot as a string.
+     *
+     * @return the greeting of the chatbot
+     */
+    public String greet() {
+        return ui.getGreeting();
+    }
+
+    /**
      * The entry point of the application.
      *
      * @param args command-line arguments (not used)

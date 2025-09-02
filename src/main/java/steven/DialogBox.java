@@ -54,7 +54,7 @@ public class DialogBox extends HBox {
         return db;
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getStevenDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 }

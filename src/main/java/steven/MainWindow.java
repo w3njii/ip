@@ -35,9 +35,10 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the chatbot instance */
+    /** Injects the chatbot instance and greeting */
     public void setSteven(Steven steven) {
         this.steven = steven;
+        dialogContainer.getChildren().add(DialogBox.getStevenDialog(steven.greet(), stevenImage));
     }
 
     @FXML
@@ -47,7 +48,7 @@ public class MainWindow extends AnchorPane {
         if (response != null) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
-                    DialogBox.getDukeDialog(response, stevenImage)
+                    DialogBox.getStevenDialog(response, stevenImage)
             );
             userInput.clear();
         }
