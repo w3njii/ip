@@ -1,5 +1,7 @@
 package steven;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
@@ -15,6 +17,8 @@ public class Steven {
     private final Storage storage;
     private final TaskList tasks;
     private final Ui ui;
+    private boolean isClosed = false;
+    Parser parser = new Parser();
 
     /**
      * Constructs a new Steven chatbot instance.
@@ -30,28 +34,52 @@ public class Steven {
     /**
      * Starts the command-line interface of the application.
      *
-     * <p>This method prints a greeting, continuously reads user input,
-     * interprets commands using <code>Parser</code>, and performs the corresponding
-     * actions such as adding tasks, marking tasks, deleting tasks, or exiting.
-     * All changes to tasks are persisted via the <code>Storage</code> class.</p>
+     * <p>This method prints a greeting, continuously reads user input and calls the getResponse(String input)
+     * method with the given user input.</p>
      */
     public void run() {
         Scanner scanner = new Scanner(System.in);
         ui.printGreeting();
         ui.printHorizontalLine();
 
-        Parser parser = new Parser();
-
-        while (true) {
+        while (!isClosed) {
             String input = scanner.nextLine();
+            System.out.print(getResponse(input));
+            ui.printHorizontalLine();
+        }
+        scanner.close();
+    }
+
+    /**
+     * A helper for the run() method, it is continuously called with the user string input.
+     *
+     * <p>This method interprets commands using <code>Parser</code>, and performs the corresponding
+     * actions such as adding tasks, marking tasks, deleting tasks, or exiting.
+     * All changes to tasks are persisted via the <code>Storage</code> class.</p>
+     *
+     * @param input the input command in a form of a string to the chatbot
+     * @return the response of the chatbot to the input
+     */
+    public String getResponse(String input) {
+        if (isClosed) {
+            return null;
+        }
+
+        PrintStream originalOut = System.out;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        System.setOut(ps);
+
+        try {
             Command command = parser.parse(input.split(" ")[0]);
 
             switch (command) {
             case BYE:
-                scanner.close();
                 ui.printGoodbye();
                 storage.saveTasks();
-                return;
+                isClosed = true;
+                break;
 
             case LIST:
                 tasks.printToDoList();
@@ -113,8 +141,23 @@ public class Steven {
                 System.out.println("\t?????");
                 break;
             }
-            ui.printHorizontalLine();
+
+        } finally {
+            // Always restore System.out
+            System.setOut(originalOut);
         }
+
+        // Convert captured output to string and return
+        return baos.toString();
+    }
+
+    /**
+     * Returns the greeting of the chatbot as a string.
+     *
+     * @return the greeting of the chatbot
+     */
+    public String greet() {
+        return ui.getGreeting();
     }
 
     /**
