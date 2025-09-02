@@ -7,6 +7,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
+import java.util.Objects;
+
 /**
  * Controller for the main GUI.
  */
@@ -22,25 +25,29 @@ public class MainWindow extends AnchorPane {
 
     private Steven steven;
 
+    private final Image userImage = new Image(Objects.requireNonNull(
+            this.getClass().getResourceAsStream("/images/user.png")));
+    private final Image stevenImage = new Image(Objects.requireNonNull(
+            this.getClass().getResourceAsStream("/images/steven.png")));
+
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
+    /** Injects the chatbot instance */
     public void setSteven(Steven steven) {
         this.steven = steven;
     }
 
-    /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
-     */
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
         String response = steven.getResponse(input);
-        dialogContainer.getChildren().addAll(new DialogBox(response));
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getDukeDialog(response, stevenImage)
+        );
         userInput.clear();
     }
 }
-

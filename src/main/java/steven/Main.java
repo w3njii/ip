@@ -8,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * A GUI for Duke using FXML.
+ */
 public class Main extends Application {
 
     private final Steven steven = new Steven("data/tasklist.txt");
@@ -19,7 +22,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setSteven(steven);  // inject the Duke instance
+            fxmlLoader.<MainWindow>getController().setSteven(steven);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
