@@ -1,16 +1,18 @@
 package steven;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import java.util.ArrayList;
 
 public class TaskListTest {
 
     @Test
     public void addToDoTask_emptyDescription_emptyDescriptionExceptionThrown() {
         try {
-            new TaskList(new ArrayList<Task>()).addToDoTask("todo ");
+            new TaskList(new ArrayList<>()).addToDoTask("todo ");
             fail();
         } catch (StevenException e) {
             assertEquals("\tWhr is your description????", e.getMessage());
@@ -20,7 +22,7 @@ public class TaskListTest {
     @Test
     public void addDeadlineTask_emptyDescription_emptyDescriptionExceptionThrown() {
         try {
-            new TaskList(new ArrayList<Task>()).addDeadlineTask("deadline  ");
+            new TaskList(new ArrayList<>()).addDeadlineTask("deadline  ");
             fail();
         } catch (StevenException e) {
             assertEquals("\tWhr is your description????", e.getMessage());
@@ -30,7 +32,7 @@ public class TaskListTest {
     @Test
     public void addDeadlineTask_invalidFormat_invalidFormatExceptionThrown() {
         try {
-            new TaskList(new ArrayList<Task>()).addDeadlineTask("deadline task ");
+            new TaskList(new ArrayList<>()).addDeadlineTask("deadline task ");
             fail();
         } catch (StevenException e) {
             assertEquals("\tPls use the correct format for deadline task", e.getMessage());
@@ -40,7 +42,7 @@ public class TaskListTest {
     @Test
     public void addDeadlineTask_emptyDeadline_missingDeadlineExceptionThrown() {
         try {
-            new TaskList(new ArrayList<Task>()).addDeadlineTask("deadline task /by ");
+            new TaskList(new ArrayList<>()).addDeadlineTask("deadline task /by ");
             fail();
         } catch (StevenException e) {
             assertEquals("\tWhr is your deadline???", e.getMessage());
@@ -60,7 +62,7 @@ public class TaskListTest {
     @Test
     public void addEventTask_emptyDescription_emptyDescriptionExceptionThrown() {
         try {
-            new TaskList(new ArrayList<Task>()).addEventTask("event  ");
+            new TaskList(new ArrayList<>()).addEventTask("event  ");
             fail();
         } catch (StevenException e) {
             assertEquals("\tWhr is your description????", e.getMessage());
@@ -70,7 +72,7 @@ public class TaskListTest {
     @Test
     public void addEventTask_invalidFormat_invalidFormatExceptionThrown() {
         try {
-            new TaskList(new ArrayList<Task>()).addEventTask("event party");
+            new TaskList(new ArrayList<>()).addEventTask("event party");
             fail();
         } catch (StevenException e) {
             assertEquals("\tPls use the correct format for event task", e.getMessage());
@@ -80,7 +82,7 @@ public class TaskListTest {
     @Test
     public void addEventTask_missingFromOrTo_invalidFormatExceptionThrown() {
         try {
-            new TaskList(new ArrayList<Task>()).addEventTask("event party /from 5pm");
+            new TaskList(new ArrayList<>()).addEventTask("event party /from 5pm");
             fail();
         } catch (StevenException e) {
             assertEquals("\tPls use the correct format for event task", e.getMessage());
@@ -90,7 +92,7 @@ public class TaskListTest {
     @Test
     public void addEventTask_emptyStartAndEndTime_missingStartAndEndTimeExceptionThrown() {
         try {
-            new TaskList(new ArrayList<Task>()).addEventTask("event party /from  /to  ");
+            new TaskList(new ArrayList<>()).addEventTask("event party /from  /to  ");
             fail();
         } catch (StevenException e) {
             assertEquals("\tYour event from when to when????", e.getMessage());
