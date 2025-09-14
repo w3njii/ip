@@ -23,7 +23,7 @@ public class Parser {
         case "unmark" -> new UnmarkTaskCommand(input);
         case "delete" -> new DeleteTaskCommand(input);
         case "list" -> new ListTasksCommand();
-        case "find" -> new FindCommand();
+        case "find" -> new FindCommand(input);
         default -> new UnknownCommand();
         };
     }

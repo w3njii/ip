@@ -1,6 +1,12 @@
 package steven.task;
 
-import steven.exception.*;
+import steven.exception.EmptyDescriptionException;
+import steven.exception.InvalidMarkFormatException;
+import steven.exception.InvalidTaskFormatException;
+import steven.exception.MissingDeadlineException;
+import steven.exception.MissingFindKeywordException;
+import steven.exception.MissingStartAndEndTimeException;
+import steven.exception.StevenException;
 
 import java.util.ArrayList;
 
@@ -170,24 +176,43 @@ public class TaskList {
     /**
      * Prints all tasks currently in the list.
      */
-    public void printToDoList() {
-        System.out.println("\tHere are the tasks in your list: ");
+    public String getToDoListString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\tHere are the tasks in your list: ");
         for (int i = 0; i < toDoList.size(); i++) {
-            System.out.println("\t\t" + (i + 1) + ". " + toDoList.get(i).toString());
+            sb.append("\n\t\t")
+                    .append(i + 1)
+                    .append(". ")
+                    .append(toDoList.get(i).toString());
         }
+        return sb.toString();
     }
 
-    public void findTasks(String keyword) throws MissingFindKeywordException {
-        if (keyword.split(" ").length < 2) {
+
+    public String findTasks(String input) throws MissingFindKeywordException {
+        String[] parts = input.trim().split("\\s+", 2);
+
+        if (parts.length < 2 || parts[1].isBlank()) {
             throw new MissingFindKeywordException();
         }
-        System.out.println("Here are the matching tasks in your list: ");
+
+        String keyword = parts[1];
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here are the matching tasks in your list:\n");
+
         int i = 1;
         for (Task task : toDoList) {
             if (task.toString().contains(keyword)) {
-                System.out.println("\t" + i + ". " + task);
+                sb.append(i).append(". ").append(task).append("\n");
                 i++;
             }
         }
+
+        if (i == 1) {
+            return "No matching tasks found";
+        }
+
+        return sb.toString();
     }
 }
