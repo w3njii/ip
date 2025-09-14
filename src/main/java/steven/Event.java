@@ -21,26 +21,30 @@ public class Event extends Task {
      * tttt is the time in 24-hour format.
      *
      * @param description the description of the task
-     * @param startTime the start time string in the specified format
-     * @param endTime the end time string in the specified format
+     * @param startTimeString the start time string in the specified format
+     * @param endTimeString the end time string in the specified format
      */
-    public Event(String description, String startTime, String endTime) throws InvalidDateAndTimeFormatException {
+    public Event(String description, String startTimeString, String endTimeString) throws InvalidDateAndTimeFormatException {
         super(description);
+        assert startTimeString != null : "Start time String should not be null";
+        assert endTimeString != null : "End time String should not be null";
         try {
-            this.startTimeString = startTime;
-            this.endTimeString = endTime;
-            int startDay = Integer.parseInt(startTime.substring(0, 2));
-            int startMonth = Integer.parseInt(startTime.substring(3, 5));
-            int startYear = Integer.parseInt(startTime.substring(6, 10));
-            int startHour = Integer.parseInt(startTime.substring(11, 13));
-            int startMinute = Integer.parseInt(startTime.substring(13, 15));
+            this.startTimeString = startTimeString;
+            this.endTimeString = endTimeString;
+            int startDay = Integer.parseInt(startTimeString.substring(0, 2));
+            int startMonth = Integer.parseInt(startTimeString.substring(3, 5));
+            int startYear = Integer.parseInt(startTimeString.substring(6, 10));
+            int startHour = Integer.parseInt(startTimeString.substring(11, 13));
+            int startMinute = Integer.parseInt(startTimeString.substring(13, 15));
             this.startTime = LocalDateTime.of(startYear, startMonth, startDay, startHour, startMinute);
-            int endDay = Integer.parseInt(endTime.substring(0, 2));
-            int endMonth = Integer.parseInt(endTime.substring(3, 5));
-            int endYear = Integer.parseInt(endTime.substring(6, 10));
-            int endHour = Integer.parseInt(endTime.substring(11, 13));
-            int endMinute = Integer.parseInt(endTime.substring(13, 15));
+            assert this.startTime != null : "Start time should not be null";
+            int endDay = Integer.parseInt(endTimeString.substring(0, 2));
+            int endMonth = Integer.parseInt(endTimeString.substring(3, 5));
+            int endYear = Integer.parseInt(endTimeString.substring(6, 10));
+            int endHour = Integer.parseInt(endTimeString.substring(11, 13));
+            int endMinute = Integer.parseInt(endTimeString.substring(13, 15));
             this.endTime = LocalDateTime.of(endYear, endMonth, endDay, endHour, endMinute);
+            assert this.endTime != null : "End time should not be null";
         } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
             throw new InvalidDateAndTimeFormatException();
         }
