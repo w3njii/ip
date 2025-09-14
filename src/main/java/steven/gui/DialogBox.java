@@ -1,4 +1,4 @@
-package steven;
+package steven.gui;
 
 import java.io.IOException;
 import java.util.Collections;

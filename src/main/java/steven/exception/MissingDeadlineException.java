@@ -1,4 +1,4 @@
-package steven;
+package steven.exception;
 
 /**
  * Thrown when a user attempts to add a Deadline task without specifying a deadline.

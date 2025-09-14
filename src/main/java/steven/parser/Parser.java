@@ -1,4 +1,6 @@
-package steven;
+package steven.parser;
+
+import steven.command.Command;
 
 public class Parser {
 

@@ -1,4 +1,4 @@
-package steven;
+package steven.command;
 
 /**
  * Represents the different commands that can be given by the user.

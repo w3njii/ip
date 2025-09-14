@@ -1,4 +1,4 @@
-package steven;
+package steven.ui;
 
 /**
  * Handles the user interface and interactions for the Steven chatbot.
