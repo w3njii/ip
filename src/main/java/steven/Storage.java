@@ -26,6 +26,7 @@ public class Storage {
      * @param filePath the filepath of the text file from the root folder
      */
     public Storage(String filePath) {
+        assert filePath != null : "File path must not be null";
         this.filePath = filePath;
     }
 
@@ -34,6 +35,7 @@ public class Storage {
      * Each task is converted to its save format before writing.
      */
     public void saveTasks() {
+        assert toDoList != null : "toDoList must never be null";
         StringBuilder stringBuilder = new StringBuilder();
         for (Task task : toDoList) {
             stringBuilder.append(task.convertToSaveFormat()).append("\n");
@@ -73,6 +75,7 @@ public class Storage {
      * @param task the text representation of a task in save format
      */
     public void loadTask(String task) {
+        assert task != null : "Task should not be null";
         try {
             if (task.startsWith("[T]")) {
                 toDoList.add(new ToDo(task.substring(7)));
