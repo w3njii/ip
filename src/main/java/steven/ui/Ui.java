@@ -33,4 +33,8 @@ public class Ui {
     public String getGreeting() {
         return GREETING;
     }
+
+    public void print(String text) {
+        System.out.println(text);
+    }
 }

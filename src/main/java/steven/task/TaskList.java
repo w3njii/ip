@@ -30,25 +30,26 @@ public class TaskList {
      * @param input the raw user input containing the task description
      * @throws StevenException if the description is empty
      */
-    public void addToDoTask(String input) throws StevenException {
+    public String addToDoTask(String input) throws StevenException {
         String description = input.substring(4).trim();
         if (description.isEmpty()) {
             throw new EmptyDescriptionException();
         }
         Task currentTask = new ToDo(description);
         toDoList.add(currentTask);
-        System.out.println("\tOK, I've added this task: " + currentTask);
-        System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+        return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
+                + toDoList.size() + " tasks in your list: ";
     }
 
     /**
      * Adds a new {@link Deadline} task to the list.
      *
      * @param input the raw user input containing the description and deadline
+     * @return
      * @throws StevenException if the format is invalid, description is empty,
      *                         or deadline is missing
      */
-    public void addDeadlineTask(String input) throws StevenException {
+    public String addDeadlineTask(String input) throws StevenException {
         String descriptionAndDeadline = input.substring(8).stripLeading();
         if (descriptionAndDeadline.isEmpty()) {
             throw new EmptyDescriptionException();
@@ -64,18 +65,19 @@ public class TaskList {
         }
         Task currentTask = new Deadline(description, deadline);
         toDoList.add(currentTask);
-        System.out.println("\tOK, I've added this task: " + currentTask);
-        System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+        return "\tOK, I've added this task: " + currentTask + "\tNow there are "
+                + toDoList.size() + " tasks in your list: ";
     }
 
     /**
      * Adds a new {@link Event} task to the list.
      *
      * @param input the raw user input containing the description, start, and end times
+     * @return
      * @throws StevenException if the format is invalid, description is empty,
      *                         or start/end times are missing
      */
-    public void addEventTask(String input) throws StevenException {
+    public String addEventTask(String input) throws StevenException {
         String descriptionAndTime = input.substring(5).stripLeading();
         if (descriptionAndTime.isEmpty()) {
             throw new EmptyDescriptionException();
@@ -93,8 +95,8 @@ public class TaskList {
         }
         Task currentTask = new Event(description, from, to);
         toDoList.add(currentTask);
-        System.out.println("\tOK, I've added this task: " + currentTask);
-        System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+        return "\tOK, I've added this task: " + currentTask + "\tNow there are "
+                + toDoList.size() + " tasks in your list: ";
     }
 
     /**

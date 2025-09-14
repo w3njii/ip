@@ -20,11 +20,11 @@ import java.io.PrintStream;
 public class Parser {
 
     public Command parse(String input) {
-        input = input.split(" ")[0].toLowerCase();
-        return switch (input) {
-        case "todo" -> new AddToDoTaskCommand();
-        case "deadline" -> new AddDeadlineTaskCommand();
-        case "event" -> new AddEventTaskCommand();
+        String command = input.split(" ")[0].toLowerCase();
+        return switch (command) {
+        case "todo" -> new AddToDoTaskCommand(input);
+        case "deadline" -> new AddDeadlineTaskCommand(input);
+        case "event" -> new AddEventTaskCommand(input);
         case "mark" -> new MarkTaskCommand();
         case "unmark" -> new UnmarkTaskCommand();
         case "delete" -> new DeleteTaskCommand();

@@ -46,7 +46,7 @@ public class Steven {
 
         while (!isClosed) {
             String input = scanner.nextLine();
-            ui.printResponse(input);
+            ui.print(getResponse(input));
             ui.printHorizontalLine();
         }
         scanner.close();
@@ -67,9 +67,12 @@ public class Steven {
             return null;
         }
 
-        Command command = parser.parse(input);
-        return command.execute(storage, tasks);
-
+        try {
+            Command command = parser.parse(input);
+            return command.execute(storage, tasks);
+        } catch (StevenException e) {
+            return e.getMessage();
+        }
     }
 
     /**
