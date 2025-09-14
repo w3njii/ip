@@ -14,19 +14,14 @@ import java.util.Scanner;
 
 /**
  * The main class of the Steven chatbot.
- *
- * <p>This class handles user interaction via the command line, manages the
- * task list, and coordinates saving and loading tasks from local storage.
- * It interprets user commands and delegates operations to the {@link TaskList}
- * and {@link Storage} classes.</p>
  */
 public class Steven {
-
     private final Storage storage;
     private final TaskList tasks;
-    private final Ui ui;
+    private final Parser parser = new Parser();
+    private final Ui ui = new Ui();
+
     private boolean isClosed = false;
-    Parser parser = new Parser();
 
     /**
      * Constructs a new Steven chatbot instance.
@@ -34,9 +29,8 @@ public class Steven {
      * @param filePath the path to the file where tasks will be stored
      */
     public Steven(String filePath) {
-        ui = new Ui();
-        storage = new Storage(filePath);
-        tasks = new TaskList(storage.fetchTasks());
+        this.storage = new Storage(filePath);
+        this.tasks = new TaskList(storage.fetchTasks());
     }
 
     /**
@@ -52,7 +46,7 @@ public class Steven {
 
         while (!isClosed) {
             String input = scanner.nextLine();
-            System.out.print(getResponse(input));
+            ui.printResponse(input);
             ui.printHorizontalLine();
         }
         scanner.close();
@@ -73,90 +67,9 @@ public class Steven {
             return null;
         }
 
-        PrintStream originalOut = System.out;
+        Command command = parser.parse(input);
+        return command.execute(storage, tasks);
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream ps = new PrintStream(baos);
-        System.setOut(ps);
-
-        try {
-            Command command = parser.parse(input.split(" ")[0]);
-
-            switch (command) {
-            case BYE:
-                ui.printGoodbye();
-                storage.saveTasks();
-                isClosed = true;
-                break;
-
-            case LIST:
-                tasks.printToDoList();
-                break;
-
-            case TODO:
-                try {
-                    tasks.addToDoTask(input);
-                } catch (StevenException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case DEADLINE:
-                try {
-                    tasks.addDeadlineTask(input);
-                } catch (StevenException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case EVENT:
-                try {
-                    tasks.addEventTask(input);
-                } catch (StevenException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case MARK:
-                try {
-                    tasks.markTask(input);
-                } catch (InvalidMarkFormatException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case UNMARK:
-                try {
-                    tasks.unmarkTask(input);
-                } catch (InvalidMarkFormatException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case DELETE:
-                tasks.deleteTask(input);
-                break;
-
-            case FIND:
-                try {
-                    tasks.findTasks(input);
-                } catch (StevenException e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-
-            case UNKNOWN:
-                System.out.println("\t?????");
-                break;
-            }
-
-        } finally {
-            // Always restore System.out
-            System.setOut(originalOut);
-        }
-
-        // Convert captured output to string and return
-        return baos.toString();
     }
 
     /**
@@ -168,6 +81,9 @@ public class Steven {
         return ui.getGreeting();
     }
 
+    void close() {
+        this.isClosed = true;
+    }
     /**
      * The entry point of the application.
      *

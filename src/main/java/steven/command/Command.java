@@ -1,9 +1,12 @@
 package steven.command;
 
+import steven.storage.Storage;
+import steven.task.TaskList;
+
 /**
  * Represents the different commands that can be given by the user.
  * Each command corresponds to an action supported by the chatbot.
  */
-public enum Command {
-    BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, UNKNOWN
+public interface Command {
+    abstract String execute(Storage storage, TaskList tasks);
 }

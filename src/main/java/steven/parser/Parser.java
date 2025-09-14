@@ -1,21 +1,38 @@
 package steven.parser;
 
 import steven.command.Command;
+import steven.command.AddDeadlineTaskCommand;
+import steven.command.AddEventTaskCommand;
+import steven.command.AddToDoTaskCommand;
+import steven.command.MarkTaskCommand;
+import steven.command.UnmarkTaskCommand;
+import steven.command.DeleteTaskCommand;
+import steven.command.ExitCommand;
+import steven.command.FindCommand;
+import steven.command.ListTasksCommand;
+import steven.command.UnknownCommand;
+import steven.exception.InvalidMarkFormatException;
+import steven.exception.StevenException;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class Parser {
 
     public Command parse(String input) {
-        return switch (input.toLowerCase()) {
-            case "todo" -> Command.TODO;
-            case "deadline" -> Command.DEADLINE;
-            case "event" -> Command.EVENT;
-            case "mark" -> Command.MARK;
-            case "unmark" -> Command.UNMARK;
-            case "delete" -> Command.DELETE;
-            case "list" -> Command.LIST;
-            case "bye" -> Command.BYE;
-            case "find" -> Command.FIND;
-            default -> Command.UNKNOWN;
+        input = input.split(" ")[0].toLowerCase();
+        return switch (input) {
+        case "todo" -> new AddToDoTaskCommand();
+        case "deadline" -> new AddDeadlineTaskCommand();
+        case "event" -> new AddEventTaskCommand();
+        case "mark" -> new MarkTaskCommand();
+        case "unmark" -> new UnmarkTaskCommand();
+        case "delete" -> new DeleteTaskCommand();
+        case "list" -> new ListTasksCommand();
+        case "bye" -> new ExitCommand();
+        case "find" -> new FindCommand();
+        default -> new UnknownCommand();
         };
     }
 }
+
