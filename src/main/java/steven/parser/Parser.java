@@ -7,15 +7,9 @@ import steven.command.AddToDoTaskCommand;
 import steven.command.MarkTaskCommand;
 import steven.command.UnmarkTaskCommand;
 import steven.command.DeleteTaskCommand;
-import steven.command.ExitCommand;
 import steven.command.FindCommand;
 import steven.command.ListTasksCommand;
 import steven.command.UnknownCommand;
-import steven.exception.InvalidMarkFormatException;
-import steven.exception.StevenException;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 public class Parser {
 
@@ -25,11 +19,10 @@ public class Parser {
         case "todo" -> new AddToDoTaskCommand(input);
         case "deadline" -> new AddDeadlineTaskCommand(input);
         case "event" -> new AddEventTaskCommand(input);
-        case "mark" -> new MarkTaskCommand();
-        case "unmark" -> new UnmarkTaskCommand();
-        case "delete" -> new DeleteTaskCommand();
+        case "mark" -> new MarkTaskCommand(input);
+        case "unmark" -> new UnmarkTaskCommand(input);
+        case "delete" -> new DeleteTaskCommand(input);
         case "list" -> new ListTasksCommand();
-        case "bye" -> new ExitCommand();
         case "find" -> new FindCommand();
         default -> new UnknownCommand();
         };

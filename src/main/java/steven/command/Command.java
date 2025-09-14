@@ -9,5 +9,5 @@ import steven.task.TaskList;
  * Each command corresponds to an action supported by the chatbot.
  */
 public interface Command {
-    abstract String execute(Storage storage, TaskList tasks) throws StevenException;
+    String execute(Storage storage, TaskList tasks) throws StevenException;
 }

@@ -90,7 +90,7 @@ public class TaskList {
         String description = descriptionAndTime.substring(0, fromIndex);
         String from = descriptionAndTime.substring(fromIndex + 7, toIndex);
         String to = descriptionAndTime.substring(toIndex + 5);
-        if (from.stripLeading().isEmpty() || to.stripLeading().isEmpty()) {
+        if (from.isBlank() || to.isBlank()) {
             throw new MissingStartAndEndTimeException();
         }
         Task currentTask = new Event(description, from, to);
@@ -103,23 +103,22 @@ public class TaskList {
      * Deletes a task from the list.
      *
      * @param input the raw user input specifying the task index to delete
+     * @return
      */
-    public void deleteTask(String input) {
+    public String deleteTask(String input) {
         if (!input.startsWith("delete ")) {
-            System.out.println("Invalid input");
-            return;
+            return "Invalid input";
         }
         try {
             int number = Integer.parseInt(input.substring(7));
             if (number < 1 || number > toDoList.size()) {
-                System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
-                return;
+                return "\tYou only have " + toDoList.size() + " tasks in your list";
             }
             Task deletedTask = toDoList.remove(number - 1);
-            System.out.println("\tOK, DELETE THIS ONE ALR:\n\t" + deletedTask);
-            System.out.println("\tNow ur list got " + toDoList.size() + " task");
+            return "\tOK, DELETE THIS ONE ALR:\n\t" + deletedTask + "\n\tNow ur list got "
+                    + toDoList.size() + " task";
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input");
+            return "Invalid input";
         }
     }
 
@@ -127,21 +126,20 @@ public class TaskList {
      * Marks a task in the list as done.
      *
      * @param input the raw user input specifying the task index
+     * @return
      * @throws InvalidMarkFormatException if the input is not in the correct format
      */
-    public void markTask(String input) throws InvalidMarkFormatException {
+    public String markTask(String input) throws InvalidMarkFormatException {
         if (!input.startsWith("mark ")) {
             throw new InvalidMarkFormatException();
         }
         try {
             int number = Integer.parseInt(input.substring(5));
             if (number > toDoList.size() || number < 1) {
-                System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
-                return;
+                return "\tYou only have " + toDoList.size() + " tasks in your list";
             }
-            System.out.println("\tOK, I will mark this task as done");
             toDoList.get(number - 1).markAsDone();
-            System.out.println("\t" + toDoList.get(number - 1).toString());
+            return "\tOK, I will mark this task as done \n\t" + toDoList.get(number - 1);
         } catch (NumberFormatException e) {
             throw new InvalidMarkFormatException();
         }
@@ -153,19 +151,17 @@ public class TaskList {
      * @param input the raw user input specifying the task index
      * @throws InvalidMarkFormatException if the input is not in the correct format
      */
-    public void unmarkTask(String input) throws InvalidMarkFormatException {
+    public String unmarkTask(String input) throws InvalidMarkFormatException {
         if (!input.startsWith("unmark ")) {
             throw new InvalidMarkFormatException();
         }
         try {
             int number = Integer.parseInt(input.substring(7));
             if (number > toDoList.size() || number < 1) {
-                System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
-                return;
+                return "\tYou only have " + toDoList.size() + " tasks in your list";
             }
-            System.out.println("\tOK, I will mark this task as not done");
             toDoList.get(number - 1).markAsNotDone();
-            System.out.println("\t" + toDoList.get(number - 1).toString());
+            return "\tOK, I will mark this task as not done \n\t" + toDoList.get(number - 1);
         } catch (NumberFormatException e) {
             throw new InvalidMarkFormatException();
         }

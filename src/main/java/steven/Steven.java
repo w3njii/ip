@@ -67,6 +67,11 @@ public class Steven {
             return null;
         }
 
+        if (input.equals("bye")) {
+            isClosed = true;
+            return "bye";
+        }
+
         try {
             Command command = parser.parse(input);
             return command.execute(storage, tasks);
@@ -84,9 +89,6 @@ public class Steven {
         return ui.getGreeting();
     }
 
-    void close() {
-        this.isClosed = true;
-    }
     /**
      * The entry point of the application.
      *
