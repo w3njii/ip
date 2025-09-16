@@ -26,6 +26,7 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String deadline) throws InvalidDateAndTimeFormatException {
         super(description);
+        assert deadline != null : "Deadline should not be null";
         try {
             this.deadlineString = deadline;
             int day = Integer.parseInt(deadline.substring(0, 2));
