@@ -1,10 +1,7 @@
 package steven.storage;
 
 import steven.exception.InvalidDateAndTimeFormatException;
-import steven.task.Deadline;
-import steven.task.Event;
-import steven.task.Task;
-import steven.task.ToDo;
+import steven.task.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -93,6 +90,12 @@ public class Storage {
                 String from = task.substring(fromIndex + 8, toIndex);
                 String to = task.substring(toIndex + 5, task.indexOf(")"));
                 tasks.add(new Event(description, from, to));
+            } else if (task.startsWith("[FD]")) {
+                int durationIndex = task.indexOf(" (needs");
+                int durationEndIndex = task.indexOf(" hours)");
+                String description = task.substring(8, durationIndex);
+                int duration = Integer.parseInt(task.substring(durationIndex + 8, durationEndIndex));
+                tasks.add(new FixedDuration(description, duration));
             }
             if (task.startsWith("[X]", 3)) {
                 tasks.get(tasks.size() - 1).markAsDone();
@@ -102,3 +105,4 @@ public class Storage {
         }
     }
 }
+
