@@ -1,4 +1,13 @@
-package steven;
+package steven.task;
+
+import steven.exception.EmptyDescriptionException;
+import steven.exception.InvalidMarkFormatException;
+import steven.exception.InvalidTaskFormatException;
+import steven.exception.MissingDeadlineException;
+import steven.exception.MissingFindKeywordException;
+import steven.exception.MissingStartAndEndTimeException;
+import steven.exception.StevenException;
+import steven.storage.Storage;
 
 import java.util.ArrayList;
 
@@ -11,15 +20,15 @@ import java.util.ArrayList;
  * </p>
  */
 public class TaskList {
-    private final ArrayList<Task> toDoList;
+    private final ArrayList<Task> taskList;
 
     /**
      * Creates a {@code TaskList} with the given list of tasks.
      *
-     * @param toDoList the list of tasks to initialize with
+     * @param taskList the list of tasks to initialize with
      */
-    public TaskList(ArrayList<Task> toDoList) {
-        this.toDoList = toDoList;
+    public TaskList(ArrayList<Task> taskList) {
+        this.taskList = taskList;
     }
 
     /**
@@ -28,25 +37,27 @@ public class TaskList {
      * @param input the raw user input containing the task description
      * @throws StevenException if the description is empty
      */
-    public void addToDoTask(String input) throws StevenException {
+    public String addToDoTask(String input, Storage storage) throws StevenException {
         String description = input.substring(4).trim();
         if (description.isEmpty()) {
             throw new EmptyDescriptionException();
         }
         Task currentTask = new ToDo(description);
-        toDoList.add(currentTask);
-        System.out.println("\tOK, I've added this task: " + currentTask);
-        System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+        taskList.add(currentTask);
+        storage.saveToLocal(taskList);
+        return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
+                + taskList.size() + " tasks in your list: ";
     }
 
     /**
      * Adds a new {@link Deadline} task to the list.
      *
      * @param input the raw user input containing the description and deadline
+     * @return
      * @throws StevenException if the format is invalid, description is empty,
      *                         or deadline is missing
      */
-    public void addDeadlineTask(String input) throws StevenException {
+    public String addDeadlineTask(String input, Storage storage) throws StevenException {
         String descriptionAndDeadline = input.substring(8).stripLeading();
         if (descriptionAndDeadline.isEmpty()) {
             throw new EmptyDescriptionException();
@@ -61,19 +72,21 @@ public class TaskList {
             throw new MissingDeadlineException();
         }
         Task currentTask = new Deadline(description, deadline);
-        toDoList.add(currentTask);
-        System.out.println("\tOK, I've added this task: " + currentTask);
-        System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+        taskList.add(currentTask);
+        storage.saveToLocal(taskList);
+        return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
+                + taskList.size() + " tasks in your list: ";
     }
 
     /**
      * Adds a new {@link Event} task to the list.
      *
      * @param input the raw user input containing the description, start, and end times
+     * @return
      * @throws StevenException if the format is invalid, description is empty,
      *                         or start/end times are missing
      */
-    public void addEventTask(String input) throws StevenException {
+    public String addEventTask(String input, Storage storage) throws StevenException {
         String descriptionAndTime = input.substring(5).stripLeading();
         if (descriptionAndTime.isEmpty()) {
             throw new EmptyDescriptionException();
@@ -86,36 +99,37 @@ public class TaskList {
         String description = descriptionAndTime.substring(0, fromIndex);
         String from = descriptionAndTime.substring(fromIndex + 7, toIndex);
         String to = descriptionAndTime.substring(toIndex + 5);
-        if (from.stripLeading().isEmpty() || to.stripLeading().isEmpty()) {
+        if (from.isBlank() || to.isBlank()) {
             throw new MissingStartAndEndTimeException();
         }
         Task currentTask = new Event(description, from, to);
-        toDoList.add(currentTask);
-        System.out.println("\tOK, I've added this task: " + currentTask);
-        System.out.println("\tNow there are " + toDoList.size() + " tasks in your list: ");
+        taskList.add(currentTask);
+        storage.saveToLocal(taskList);
+        return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
+                + taskList.size() + " tasks in your list: ";
     }
 
     /**
      * Deletes a task from the list.
      *
      * @param input the raw user input specifying the task index to delete
+     * @return
      */
-    public void deleteTask(String input) {
+    public String deleteTask(String input, Storage storage) {
         if (!input.startsWith("delete ")) {
-            System.out.println("Invalid input");
-            return;
+            return "Invalid input";
         }
         try {
             int number = Integer.parseInt(input.substring(7));
-            if (number < 1 || number > toDoList.size()) {
-                System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
-                return;
+            if (number < 1 || number > taskList.size()) {
+                return "\tYou only have " + taskList.size() + " tasks in your list";
             }
-            Task deletedTask = toDoList.remove(number - 1);
-            System.out.println("\tOK, DELETE THIS ONE ALR:\n\t" + deletedTask);
-            System.out.println("\tNow ur list got " + toDoList.size() + " task");
+            Task deletedTask = taskList.remove(number - 1);
+            storage.saveToLocal(taskList);
+            return "\tOK, DELETE THIS ONE ALR:\n\t" + deletedTask + "\n\tNow ur list got "
+                    + taskList.size() + " task";
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input");
+            return "Invalid input";
         }
     }
 
@@ -123,21 +137,21 @@ public class TaskList {
      * Marks a task in the list as done.
      *
      * @param input the raw user input specifying the task index
+     * @return
      * @throws InvalidMarkFormatException if the input is not in the correct format
      */
-    public void markTask(String input) throws InvalidMarkFormatException {
+    public String markTask(String input, Storage storage) throws InvalidMarkFormatException {
         if (!input.startsWith("mark ")) {
             throw new InvalidMarkFormatException();
         }
         try {
             int number = Integer.parseInt(input.substring(5));
-            if (number > toDoList.size() || number < 1) {
-                System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
-                return;
+            if (number > taskList.size() || number < 1) {
+                return "\tYou only have " + taskList.size() + " tasks in your list";
             }
-            System.out.println("\tOK, I will mark this task as done");
-            toDoList.get(number - 1).markAsDone();
-            System.out.println("\t" + toDoList.get(number - 1).toString());
+            taskList.get(number - 1).markAsDone();
+            storage.saveToLocal(taskList);
+            return "\tOK, I will mark this task as done \n\t" + taskList.get(number - 1);
         } catch (NumberFormatException e) {
             throw new InvalidMarkFormatException();
         }
@@ -149,19 +163,18 @@ public class TaskList {
      * @param input the raw user input specifying the task index
      * @throws InvalidMarkFormatException if the input is not in the correct format
      */
-    public void unmarkTask(String input) throws InvalidMarkFormatException {
+    public String unmarkTask(String input, Storage storage) throws InvalidMarkFormatException {
         if (!input.startsWith("unmark ")) {
             throw new InvalidMarkFormatException();
         }
         try {
             int number = Integer.parseInt(input.substring(7));
-            if (number > toDoList.size() || number < 1) {
-                System.out.println("\tYou only have " + toDoList.size() + " tasks in your list");
-                return;
+            if (number > taskList.size() || number < 1) {
+                return "\tYou only have " + taskList.size() + " tasks in your list";
             }
-            System.out.println("\tOK, I will mark this task as not done");
-            toDoList.get(number - 1).markAsNotDone();
-            System.out.println("\t" + toDoList.get(number - 1).toString());
+            taskList.get(number - 1).markAsNotDone();
+            storage.saveToLocal(taskList);
+            return "\tOK, I will mark this task as not done \n\t" + taskList.get(number - 1);
         } catch (NumberFormatException e) {
             throw new InvalidMarkFormatException();
         }
@@ -170,24 +183,43 @@ public class TaskList {
     /**
      * Prints all tasks currently in the list.
      */
-    public void printToDoList() {
-        System.out.println("\tHere are the tasks in your list: ");
-        for (int i = 0; i < toDoList.size(); i++) {
-            System.out.println("\t\t" + (i + 1) + ". " + toDoList.get(i).toString());
+    public String getToDoListString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\tHere are the tasks in your list: ");
+        for (int i = 0; i < taskList.size(); i++) {
+            sb.append("\n\t\t")
+                    .append(i + 1)
+                    .append(". ")
+                    .append(taskList.get(i).toString());
         }
+        return sb.toString();
     }
 
-    public void findTasks(String keyword) throws MissingFindKeywordException {
-        if (keyword.split(" ").length < 2) {
+
+    public String findTasks(String input) throws MissingFindKeywordException {
+        String[] parts = input.trim().split("\\s+", 2);
+
+        if (parts.length < 2 || parts[1].isBlank()) {
             throw new MissingFindKeywordException();
         }
-        System.out.println("Here are the matching tasks in your list: ");
+
+        String keyword = parts[1];
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("\tHere are the matching tasks in your list:\n");
+
         int i = 1;
-        for (Task task : toDoList) {
+        for (Task task : taskList) {
             if (task.toString().contains(keyword)) {
-                System.out.println("\t" + i + ". " + task);
+                sb.append("\t").append(i).append(". ").append(task).append("\n");
                 i++;
             }
         }
+
+        if (i == 1) {
+            return "\tNo matching tasks found";
+        }
+
+        return sb.toString();
     }
 }

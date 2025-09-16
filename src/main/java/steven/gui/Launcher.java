@@ -1,4 +1,4 @@
-package steven;
+package steven.gui;
 
 import javafx.application.Application;
 

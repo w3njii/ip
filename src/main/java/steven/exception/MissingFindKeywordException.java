@@ -1,4 +1,4 @@
-package steven;
+package steven.exception;
 
 public class MissingFindKeywordException extends StevenException {
     public MissingFindKeywordException() {

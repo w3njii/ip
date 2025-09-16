@@ -1,9 +1,13 @@
 package steven;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
+import steven.storage.Storage;
+import steven.task.Task;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
 
 public class StorageTest {
 
@@ -25,16 +29,16 @@ public class StorageTest {
         ArrayList<Task> tasks = storage.fetchTasks();
         assertEquals(1, tasks.size());
         tasks.clear();
-        storage.saveTasks();
+        storage.saveToLocal(tasks);
         assertEquals(0, storage.fetchTasks().size());
-        storage.loadTask("[T][ ] task");
-        storage.loadTask("[E][ ] event (from: 20-10-2093 1532 to: 28-09-2039 1234)");
-        storage.saveTasks();
+        storage.loadTask("[T][ ] task", tasks);
+        storage.loadTask("[E][ ] event (from: 20-10-2093 1532 to: 28-09-2039 1234)", tasks);
+        storage.saveToLocal(tasks);
         assertEquals(2, tasks.size());
         tasks.clear();
-        storage.saveTasks();
+        storage.saveToLocal(tasks);
         assertEquals(0, storage.fetchTasks().size());
-        storage.loadTask("[D][X] deadline (by: 20-09-2023 1231)");
-        storage.saveTasks();
+        storage.loadTask("[D][X] deadline (by: 20-09-2023 1231)", tasks);
+        storage.saveToLocal(tasks);
     }
 }

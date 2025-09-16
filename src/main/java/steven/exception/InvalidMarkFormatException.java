@@ -1,4 +1,4 @@
-package steven;
+package steven.exception;
 
 /**
  * Thrown when the user does not follow the correct syntax for marking and unmarking tasks as done.

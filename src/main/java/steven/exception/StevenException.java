@@ -1,4 +1,4 @@
-package steven;
+package steven.exception;
 
 /**
  * The base class for all custom exceptions used in the Steven chatbot.

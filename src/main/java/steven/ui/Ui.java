@@ -1,4 +1,4 @@
-package steven;
+package steven.ui;
 
 /**
  * Handles the user interface and interactions for the Steven chatbot.
@@ -32,5 +32,9 @@ public class Ui {
 
     public String getGreeting() {
         return GREETING;
+    }
+
+    public void print(String text) {
+        System.out.println(text);
     }
 }

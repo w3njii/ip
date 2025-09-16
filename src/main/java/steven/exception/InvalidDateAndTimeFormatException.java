@@ -1,4 +1,4 @@
-package steven;
+package steven.exception;
 
 /**
  * Thrown when the user does not follow the format for date and time when adding a task that requires it.

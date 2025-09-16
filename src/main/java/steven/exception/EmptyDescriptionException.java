@@ -1,4 +1,4 @@
-package steven;
+package steven.exception;
 
 /**
  * Thrown when the user attempts to add a task without providing a description.
