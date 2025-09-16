@@ -1,18 +1,20 @@
 package steven;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
+
 import steven.exception.StevenException;
 import steven.storage.Storage;
 import steven.task.Task;
 import steven.task.TaskList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class TaskListTest {
-    Storage storage = new Storage("");
+    private final Storage storage = new Storage("");
 
     @Test
     public void addToDoTask_emptyDescription_emptyDescriptionExceptionThrown() {

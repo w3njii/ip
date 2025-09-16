@@ -1,14 +1,17 @@
 package steven.storage;
 
-import steven.exception.InvalidDateAndTimeFormatException;
-import steven.task.*;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import steven.exception.InvalidDateAndTimeFormatException;
+import steven.task.Deadline;
+import steven.task.Event;
+import steven.task.FixedDuration;
+import steven.task.Task;
+import steven.task.ToDo;
 
 /**
  * The <code>Storage</code> class provides methods to save and load tasks
@@ -31,6 +34,13 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Saves the given list of tasks to local storage as a text file.
+     * Each task is converted to its save format before writing.
+     *
+     * @param tasks the list of tasks to save; must not be null
+     * @throws AssertionError if {@code tasks} is null
+     */
     public void saveToLocal(ArrayList<Task> tasks) {
         assert tasks != null : "toDoList must never be null";
         StringBuilder stringBuilder = new StringBuilder();
@@ -93,11 +103,11 @@ public class Storage {
     private Task parseTask(String task) throws InvalidDateAndTimeFormatException {
         String type = task.substring(0, task.indexOf("]") + 1);
         return switch (type) {
-            case "[T]" -> parseToDoTask(task);
-            case "[D]" -> parseDeadlineTask(task);
-            case "[E]" -> parseEventTask(task);
-            case "[FD]" -> parseFixedDurationTask(task);
-            default -> null;
+        case "[T]" -> parseToDoTask(task);
+        case "[D]" -> parseDeadlineTask(task);
+        case "[E]" -> parseEventTask(task);
+        case "[FD]" -> parseFixedDurationTask(task);
+        default -> null;
         };
     }
 

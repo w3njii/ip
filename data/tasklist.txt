@@ -1,0 +1,4 @@
+[T][ ] task
+[D][ ] task (by: 23-02-2323 2323)
+[E][ ] task (from: 23-02-2323 2323 to: 23-02-1029 2323)
+[FD][ ] task (needs 2 hours)

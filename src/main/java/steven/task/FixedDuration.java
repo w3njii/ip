@@ -5,7 +5,7 @@ package steven.task;
  *
  * @author w3njii
  */
-public class FixedDuration extends Task{
+public class FixedDuration extends Task {
     private int durationInHours;
 
     /**
@@ -36,22 +36,3 @@ public class FixedDuration extends Task{
         return "[FD]" + super.toString() + " (needs " + durationInHours + " hours)";
     }
 }
-
-
-
-//    @Override
-//    public String convertToSaveFormat() {
-//        return "[D]" + super.convertToSaveFormat() + " (by: " + this.deadlineString + ")";
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     *
-//     * Additionally, adds a "[D]" at the front to represent "deadline" task, and the deadline at the end.
-//     */
-//    @Override
-//    public String toString() {
-//        return "[D]" + super.toString() + " (by: "
-//                + this.deadline.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm")) + ")";
-//    }
-//}

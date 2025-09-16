@@ -1,42 +1,39 @@
 package steven.task;
 
+import java.util.ArrayList;
+
 import steven.exception.EmptyDescriptionException;
 import steven.exception.InvalidMarkFormatException;
 import steven.exception.InvalidTaskFormatException;
 import steven.exception.MissingDeadlineException;
+import steven.exception.MissingDurationException;
 import steven.exception.MissingFindKeywordException;
 import steven.exception.MissingStartAndEndTimeException;
-import steven.exception.MissingDurationException;
 import steven.exception.StevenException;
 import steven.storage.Storage;
 
-import java.util.ArrayList;
-
 /**
  * Represents a list of tasks that can be modified by user commands.
- * <p>
- * Provides methods to add, delete, mark, unmark, and print tasks.
- * It maintains an internal {@link ArrayList} of {@link Task} objects
- * that reflects the current state of the task list.
- * </p>
  */
 public class TaskList {
     private final ArrayList<Task> taskList;
 
     /**
-     * Creates a {@code TaskList} with the given list of tasks.
+     * Creates a TaskList with the given list of tasks.
      *
-     * @param taskList the list of tasks to initialize with
+     * @param taskList the list of tasks to initialize with.
      */
     public TaskList(ArrayList<Task> taskList) {
         this.taskList = taskList;
     }
 
     /**
-     * Adds a new {@link ToDo} task to the list.
+     * Adds a new ToDo task to the list.
      *
-     * @param input the raw user input containing the task description
-     * @throws StevenException if the description is empty
+     * @param input the raw user input containing the task description.
+     * @param storage the storage object used to persist the task list.
+     * @return confirmation message including the added task and total task count.
+     * @throws StevenException if the description is empty.
      */
     public String addToDoTask(String input, Storage storage) throws StevenException {
         String description = input.substring(4).trim();
@@ -51,11 +48,12 @@ public class TaskList {
     }
 
     /**
-     * Adds a new {@link Deadline} task to the list.
+     * Adds a new ToDo task to the list.
      *
-     * @param input the raw user input containing the description and deadline
-     * @throws StevenException if the format is invalid, description is empty,
-     *                         or deadline is missing
+     * @param input the raw user input containing the task description.
+     * @param storage the storage object used to persist the task list.
+     * @return confirmation message including the added task and total task count.
+     * @throws StevenException if the description is empty.
      */
     public String addDeadlineTask(String input, Storage storage) throws StevenException {
         String descriptionAndDeadline = input.substring(8).stripLeading();
@@ -79,11 +77,12 @@ public class TaskList {
     }
 
     /**
-     * Adds a new {@link Event} task to the list.
+     * Adds a new Event task to the list.
      *
-     * @param input the raw user input containing the description, start, and end times
-     * @throws StevenException if the format is invalid, description is empty,
-     *                         or start/end times are missing
+     * @param input the raw user input containing the description, start time, and end time.
+     * @param storage the storage object used to persist the task list.
+     * @return confirmation message including the added task and total task count.
+     * @throws StevenException if the description is empty, start/end time is missing, or format is invalid.
      */
     public String addEventTask(String input, Storage storage) throws StevenException {
         String descriptionAndTime = input.substring(5).stripLeading();
@@ -108,6 +107,14 @@ public class TaskList {
                 + taskList.size() + " tasks in your list: ";
     }
 
+    /**
+     * Adds a new FixedDuration task to the list.
+     *
+     * @param input the raw user input containing the description and duration.
+     * @param storage the storage object used to persist the task list.
+     * @return confirmation message including the added task and total task count.
+     * @throws StevenException if the description is empty, duration is missing, or format is invalid.
+     */
     public String addFixedDurationTask(String input, Storage storage) throws StevenException {
         String descriptionAndDuration = input.substring(14).stripLeading();
         if (descriptionAndDuration.isEmpty()) {
@@ -132,7 +139,9 @@ public class TaskList {
     /**
      * Deletes a task from the list.
      *
-     * @param input the raw user input specifying the task index to delete
+     * @param input the raw user input specifying the task index to delete.
+     * @param storage the storage object used to persist the task list.
+     * @return confirmation message including the deleted task and remaining task count, or an error message.
      */
     public String deleteTask(String input, Storage storage) {
         if (!input.startsWith("delete ")) {
@@ -153,10 +162,12 @@ public class TaskList {
     }
 
     /**
-     * Marks a task in the list as done.
+     * Marks a task as done.
      *
-     * @param input the raw user input specifying the task index
-     * @throws InvalidMarkFormatException if the input is not in the correct format
+     * @param input the raw user input specifying the task index.
+     * @param storage the storage object used to persist the task list.
+     * @return confirmation message including the marked task.
+     * @throws InvalidMarkFormatException if the input format is invalid.
      */
     public String markTask(String input, Storage storage) throws InvalidMarkFormatException {
         if (!input.startsWith("mark ")) {
@@ -176,10 +187,12 @@ public class TaskList {
     }
 
     /**
-     * Marks a task in the list as not done.
+     * Marks a task as not done.
      *
-     * @param input the raw user input specifying the task index
-     * @throws InvalidMarkFormatException if the input is not in the correct format
+     * @param input the raw user input specifying the task index.
+     * @param storage the storage object used to persist the task list.
+     * @return confirmation message including the unmarked task.
+     * @throws InvalidMarkFormatException if the input format is invalid.
      */
     public String unmarkTask(String input, Storage storage) throws InvalidMarkFormatException {
         if (!input.startsWith("unmark ")) {
@@ -199,7 +212,9 @@ public class TaskList {
     }
 
     /**
-     * Prints all tasks currently in the list.
+     * Returns all tasks as a formatted string.
+     *
+     * @return string containing all tasks in the list.
      */
     public String getToDoListString() {
         StringBuilder sb = new StringBuilder();
@@ -213,7 +228,13 @@ public class TaskList {
         return sb.toString();
     }
 
-
+    /**
+     * Finds tasks containing the given keyword.
+     *
+     * @param input the raw user input containing the keyword to search.
+     * @return string listing all matching tasks or a message if none found.
+     * @throws MissingFindKeywordException if the keyword is missing.
+     */
     public String findTasks(String input) throws MissingFindKeywordException {
         String[] parts = input.trim().split("\\s+", 2);
 

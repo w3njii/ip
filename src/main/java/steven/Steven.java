@@ -1,13 +1,12 @@
 package steven;
 
+import java.util.Scanner;
+
 import steven.command.Command;
-import steven.exception.StevenException;
+import steven.parser.Parser;
 import steven.storage.Storage;
 import steven.task.TaskList;
-import steven.parser.Parser;
 import steven.ui.Ui;
-
-import java.util.Scanner;
 
 /**
  * The main class of the Steven chatbot.
@@ -67,12 +66,8 @@ public class Steven {
             isClosed = true;
             return "\tbye";
         }
-        try {
-            Command command = parser.parse(input);
-            return command.execute(storage, tasks);
-        } catch (StevenException e) {
-            return e.getMessage();
-        }
+        Command command = parser.parse(input);
+        return command.execute(storage, tasks);
     }
 
     /**

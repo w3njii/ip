@@ -1,9 +1,9 @@
 package steven.task;
 
-import steven.exception.InvalidDateAndTimeFormatException;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import steven.exception.InvalidDateAndTimeFormatException;
 
 /**
  * Represents a task that start at a specific date/time and ends at a specific date/time.
@@ -26,7 +26,8 @@ public class Event extends Task {
      * @param startTimeString the start time string in the specified format
      * @param endTimeString the end time string in the specified format
      */
-    public Event(String description, String startTimeString, String endTimeString) throws InvalidDateAndTimeFormatException {
+    public Event(String description, String startTimeString, String endTimeString)
+            throws InvalidDateAndTimeFormatException {
         super(description);
         assert startTimeString != null : "Start time String should not be null";
         assert endTimeString != null : "End time String should not be null";

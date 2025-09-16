@@ -5,6 +5,9 @@ package steven.exception;
  */
 public class InvalidDateAndTimeFormatException extends StevenException {
 
+    /**
+     * Creates a new instance of an InvalidDateAndTimeFormatException.
+     */
     public InvalidDateAndTimeFormatException() {
         super("\tPls use the correct format for date and time, the format is dd-mm-yyyy tttt\n\t"
                 + "dd: day\n\t"
