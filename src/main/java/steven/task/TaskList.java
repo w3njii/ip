@@ -6,6 +6,7 @@ import steven.exception.InvalidTaskFormatException;
 import steven.exception.MissingDeadlineException;
 import steven.exception.MissingFindKeywordException;
 import steven.exception.MissingStartAndEndTimeException;
+import steven.exception.MissingDurationException;
 import steven.exception.StevenException;
 import steven.storage.Storage;
 
@@ -53,7 +54,6 @@ public class TaskList {
      * Adds a new {@link Deadline} task to the list.
      *
      * @param input the raw user input containing the description and deadline
-     * @return
      * @throws StevenException if the format is invalid, description is empty,
      *                         or deadline is missing
      */
@@ -82,7 +82,6 @@ public class TaskList {
      * Adds a new {@link Event} task to the list.
      *
      * @param input the raw user input containing the description, start, and end times
-     * @return
      * @throws StevenException if the format is invalid, description is empty,
      *                         or start/end times are missing
      */
@@ -109,11 +108,31 @@ public class TaskList {
                 + taskList.size() + " tasks in your list: ";
     }
 
+    public String addFixedDurationTask(String input, Storage storage) throws StevenException {
+        String descriptionAndDuration = input.substring(14).stripLeading();
+        if (descriptionAndDuration.isEmpty()) {
+            throw new EmptyDescriptionException();
+        }
+        int durationIndex = descriptionAndDuration.indexOf(" /duration ");
+        if (durationIndex == -1) {
+            throw new InvalidTaskFormatException("fixed duration");
+        }
+        String description = descriptionAndDuration.substring(0, durationIndex);
+        String duration = descriptionAndDuration.substring(durationIndex + 11);
+        if (duration.trim().isEmpty()) {
+            throw new MissingDurationException();
+        }
+        Task currentTask = new FixedDuration(description, Integer.parseInt(duration));
+        taskList.add(currentTask);
+        storage.saveToLocal(taskList);
+        return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
+                + taskList.size() + " tasks in your list: ";
+    }
+
     /**
      * Deletes a task from the list.
      *
      * @param input the raw user input specifying the task index to delete
-     * @return
      */
     public String deleteTask(String input, Storage storage) {
         if (!input.startsWith("delete ")) {
@@ -137,7 +156,6 @@ public class TaskList {
      * Marks a task in the list as done.
      *
      * @param input the raw user input specifying the task index
-     * @return
      * @throws InvalidMarkFormatException if the input is not in the correct format
      */
     public String markTask(String input, Storage storage) throws InvalidMarkFormatException {
