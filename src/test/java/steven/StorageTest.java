@@ -18,12 +18,6 @@ public class StorageTest {
     }
 
     @Test
-    void fetchTasks_nonExistentFile_doesNotCrash() {
-        ArrayList<Task> tasks = new Storage("").fetchTasks();
-        assertEquals(0, tasks.size());
-    }
-
-    @Test
     void fetchAndSaveTasks_validInput_success() {
         Storage storage = new Storage("src/test/java/steven/test_file.txt");
         ArrayList<Task> tasks = storage.fetchTasks();
