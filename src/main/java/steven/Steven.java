@@ -66,12 +66,10 @@ public class Steven {
         if (isClosed) {
             return null;
         }
-
         if (input.equals("bye")) {
             isClosed = true;
-            return "bye";
+            return "\tbye";
         }
-
         try {
             Command command = parser.parse(input);
             return command.execute(storage, tasks);

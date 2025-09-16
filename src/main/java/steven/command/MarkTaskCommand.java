@@ -14,7 +14,7 @@ public class MarkTaskCommand implements Command {
     @Override
     public String execute(Storage storage, TaskList tasks) {
         try {
-            return tasks.markTask(input);
+            return tasks.markTask(input, storage);
         } catch (InvalidMarkFormatException e) {
             return e.getMessage();
         }

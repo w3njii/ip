@@ -14,7 +14,7 @@ public class UnmarkTaskCommand implements Command {
     @Override
     public String execute(Storage storage, TaskList tasks) {
         try {
-            return tasks.unmarkTask(input);
+            return tasks.unmarkTask(input, storage);
         } catch (InvalidMarkFormatException e) {
             return e.getMessage();
         }

@@ -24,7 +24,6 @@ import java.util.Scanner;
  */
 public class Storage {
     private final String filePath;
-    private final ArrayList<Task> toDoList = new ArrayList<>();
 
     /**
      * Creates a Storage instance that is able to read from and write to the specified file.
@@ -35,13 +34,9 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    /**
-     * Writes all tasks in the internal list to the specified file as text.
-     * Each task is converted to its save format before writing.
-     */
-    public void saveTasks() {
+    public void saveToLocal(ArrayList<Task> tasks) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Task task : toDoList) {
+        for (Task task : tasks) {
             stringBuilder.append(task.convertToSaveFormat()).append("\n");
         }
         try {
@@ -49,7 +44,7 @@ public class Storage {
             fw.write(stringBuilder.toString());
             fw.close();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error writing to file: " + e.getMessage());
         }
     }
 
@@ -60,17 +55,18 @@ public class Storage {
      */
     public ArrayList<Task> fetchTasks() {
         File f = new File(this.filePath);
+        ArrayList<Task> tasks = new ArrayList<>();
         try {
             Scanner taskScanner = new Scanner(f);
             while (taskScanner.hasNextLine()) {
                 String currentTask = taskScanner.nextLine();
-                loadTask(currentTask);
+                loadTask(currentTask, tasks);
             }
             taskScanner.close();
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error reading from local: " + e.getMessage());
         }
-        return toDoList;
+        return tasks;
     }
 
     /**
@@ -78,25 +74,25 @@ public class Storage {
      *
      * @param task the text representation of a task in save format
      */
-    public void loadTask(String task) {
+    public void loadTask(String task, ArrayList<Task> tasks) {
         try {
             if (task.startsWith("[T]")) {
-                toDoList.add(new ToDo(task.substring(7)));
+                tasks.add(new ToDo(task.substring(7)));
             } else if (task.startsWith("[D]")) {
                 int byIndex = task.indexOf(" (by:");
                 String description = task.substring(7, byIndex);
                 String by = task.substring(byIndex + 6, task.indexOf(")"));
-                toDoList.add(new Deadline(description, by));
+                tasks.add(new Deadline(description, by));
             } else if (task.startsWith("[E]")) {
                 int fromIndex = task.indexOf(" (from:");
                 int toIndex = task.indexOf(" to:");
                 String description = task.substring(7, fromIndex);
                 String from = task.substring(fromIndex + 8, toIndex);
                 String to = task.substring(toIndex + 5, task.indexOf(")"));
-                toDoList.add(new Event(description, from, to));
+                tasks.add(new Event(description, from, to));
             }
             if (task.startsWith("[X]", 3)) {
-                toDoList.get(toDoList.size() - 1).markAsDone();
+                tasks.get(tasks.size() - 1).markAsDone();
             }
         } catch (InvalidDateAndTimeFormatException e) {
             System.out.println(e.getMessage());

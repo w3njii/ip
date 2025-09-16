@@ -14,7 +14,7 @@ public class AddEventTaskCommand implements Command {
     @Override
     public String execute(Storage storage, TaskList tasks) {
         try {
-            return tasks.addEventTask(input);
+            return tasks.addEventTask(input, storage);
         } catch (StevenException e) {
             return e.getMessage();
         }

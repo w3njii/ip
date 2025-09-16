@@ -14,7 +14,7 @@ public class AddDeadlineTaskCommand implements Command {
     @Override
     public String execute(Storage storage, TaskList tasks) {
         try {
-            return tasks.addDeadlineTask(input);
+            return tasks.addDeadlineTask(input, storage);
         } catch (StevenException e) {
             return e.getMessage();
         }

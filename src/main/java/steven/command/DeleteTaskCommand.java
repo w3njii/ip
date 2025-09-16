@@ -12,6 +12,6 @@ public class DeleteTaskCommand implements Command {
 
     @Override
     public String execute(Storage storage, TaskList tasks) {
-        return tasks.deleteTask(input);
+        return tasks.deleteTask(input, storage);
     }
 }
