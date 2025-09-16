@@ -4,7 +4,6 @@ import steven.exception.InvalidDateAndTimeFormatException;
 import steven.task.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,17 +55,23 @@ public class Storage {
         File f = new File(this.filePath);
         ArrayList<Task> tasks = new ArrayList<>();
         try {
+            if (!f.exists()) {
+                f.getParentFile().mkdirs();
+                f.createNewFile();
+                return tasks;
+            }
             Scanner taskScanner = new Scanner(f);
             while (taskScanner.hasNextLine()) {
                 String currentTask = taskScanner.nextLine();
                 loadTask(currentTask, tasks);
             }
             taskScanner.close();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("Error reading from local: " + e.getMessage());
         }
         return tasks;
     }
+
 
     /**
      * Parses a task string in its save format and adds the corresponding Task object to the internal list.
@@ -76,33 +81,52 @@ public class Storage {
     public void loadTask(String task, ArrayList<Task> tasks) {
         assert task != null : "Task should not be null";
         try {
-            if (task.startsWith("[T]")) {
-                tasks.add(new ToDo(task.substring(7)));
-            } else if (task.startsWith("[D]")) {
-                int byIndex = task.indexOf(" (by:");
-                String description = task.substring(7, byIndex);
-                String by = task.substring(byIndex + 6, task.indexOf(")"));
-                tasks.add(new Deadline(description, by));
-            } else if (task.startsWith("[E]")) {
-                int fromIndex = task.indexOf(" (from:");
-                int toIndex = task.indexOf(" to:");
-                String description = task.substring(7, fromIndex);
-                String from = task.substring(fromIndex + 8, toIndex);
-                String to = task.substring(toIndex + 5, task.indexOf(")"));
-                tasks.add(new Event(description, from, to));
-            } else if (task.startsWith("[FD]")) {
-                int durationIndex = task.indexOf(" (needs");
-                int durationEndIndex = task.indexOf(" hours)");
-                String description = task.substring(8, durationIndex);
-                int duration = Integer.parseInt(task.substring(durationIndex + 8, durationEndIndex));
-                tasks.add(new FixedDuration(description, duration));
-            }
+            tasks.add(parseTask(task));
             if (task.startsWith("[X]", 3)) {
                 tasks.get(tasks.size() - 1).markAsDone();
             }
         } catch (InvalidDateAndTimeFormatException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private Task parseTask(String task) throws InvalidDateAndTimeFormatException {
+        String type = task.substring(0, task.indexOf("]") + 1);
+        return switch (type) {
+            case "[T]" -> parseToDoTask(task);
+            case "[D]" -> parseDeadlineTask(task);
+            case "[E]" -> parseEventTask(task);
+            case "[FD]" -> parseFixedDurationTask(task);
+            default -> null;
+        };
+    }
+
+    private Task parseToDoTask(String task) {
+        return new ToDo(task.substring(7));
+    }
+
+    private Task parseDeadlineTask(String task) throws InvalidDateAndTimeFormatException {
+        int byIndex = task.indexOf(" (by:");
+        String description = task.substring(7, byIndex);
+        String by = task.substring(byIndex + 6, task.indexOf(")"));
+        return new Deadline(description, by);
+    }
+
+    private Task parseEventTask(String task) throws InvalidDateAndTimeFormatException {
+        int fromIndex = task.indexOf(" (from:");
+        int toIndex = task.indexOf(" to:");
+        String description = task.substring(7, fromIndex);
+        String from = task.substring(fromIndex + 8, toIndex);
+        String to = task.substring(toIndex + 5, task.indexOf(")"));
+        return new Event(description, from, to);
+    }
+
+    private Task parseFixedDurationTask(String task) {
+        int durationIndex = task.indexOf(" (needs");
+        int durationEndIndex = task.indexOf(" hours)");
+        String description = task.substring(8, durationIndex);
+        int duration = Integer.parseInt(task.substring(durationIndex + 8, durationEndIndex));
+        return new FixedDuration(description, duration);
     }
 }
 
