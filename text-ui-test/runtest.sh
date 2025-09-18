@@ -14,8 +14,9 @@ mkdir -p "$BIN_DIR"
 # Delete previous output
 rm -f "$ACTUAL_FILE"
 
-# Compile all Java files into bin folder
-if ! javac -Xlint:none -d "$BIN_DIR" "$SRC_DIR"/steven/*.java; then
+# Compile all Java files into bin folder (recursively)
+# shellcheck disable=SC2046
+if ! javac -Xlint:none -d "$BIN_DIR" $(find "$SRC_DIR" -name "*.java"); then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi

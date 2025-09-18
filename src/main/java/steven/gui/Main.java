@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import steven.Steven;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for Steven using FXML.
  */
 public class Main extends Application {
 
