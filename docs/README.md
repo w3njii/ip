@@ -1,6 +1,6 @@
 # Steven User Guide
 
-![Screenshot of UI](/docs/Ui.png)
+![Screenshot of UI](./Ui.png)
 
 **Nothing beats a task manager chatbot with easy to use commands.
 And now, you can save 50 pounds per person,
