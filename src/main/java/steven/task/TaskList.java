@@ -44,7 +44,7 @@ public class TaskList {
         taskList.add(currentTask);
         storage.saveToLocal(taskList);
         return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
-                + taskList.size() + " tasks in your list: ";
+                + taskList.size() + " tasks in your list";
     }
 
     /**
@@ -73,7 +73,7 @@ public class TaskList {
         taskList.add(currentTask);
         storage.saveToLocal(taskList);
         return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
-                + taskList.size() + " tasks in your list: ";
+                + taskList.size() + " tasks in your list";
     }
 
     /**
@@ -104,7 +104,7 @@ public class TaskList {
         taskList.add(currentTask);
         storage.saveToLocal(taskList);
         return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
-                + taskList.size() + " tasks in your list: ";
+                + taskList.size() + " tasks in your list";
     }
 
     /**
@@ -133,7 +133,7 @@ public class TaskList {
         taskList.add(currentTask);
         storage.saveToLocal(taskList);
         return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
-                + taskList.size() + " tasks in your list: ";
+                + taskList.size() + " tasks in your list";
     }
 
     /**
