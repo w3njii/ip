@@ -6,16 +6,16 @@ package steven.task;
  * @author w3njii
  */
 public class FixedDuration extends Task {
-    private int durationInHours;
+    private float durationInHours;
 
     /**
      * Creates a new fixed duration task with the given description and duration in hours.
-     * The duration must be an integer.
+     * The duration must be a float.
      *
      * @param description the description of the task
      * @param durationInHours the duration of the task in hours
      */
-    public FixedDuration(String description, int durationInHours) {
+    public FixedDuration(String description, float durationInHours) {
         super(description);
         this.durationInHours = durationInHours;
     }

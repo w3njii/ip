@@ -3,6 +3,7 @@ package steven.task;
 import java.util.ArrayList;
 
 import steven.exception.EmptyDescriptionException;
+import steven.exception.InvalidFixedDurationTimeException;
 import steven.exception.InvalidMarkFormatException;
 import steven.exception.InvalidTaskFormatException;
 import steven.exception.MissingDeadlineException;
@@ -116,24 +117,28 @@ public class TaskList {
      * @throws StevenException if the description is empty, duration is missing, or format is invalid.
      */
     public String addFixedDurationTask(String input, Storage storage) throws StevenException {
-        String descriptionAndDuration = input.substring(14).stripLeading();
-        if (descriptionAndDuration.isEmpty()) {
-            throw new EmptyDescriptionException();
+        try {
+            String descriptionAndDuration = input.substring(14).stripLeading();
+            if (descriptionAndDuration.isEmpty()) {
+                throw new EmptyDescriptionException();
+            }
+            int durationIndex = descriptionAndDuration.indexOf(" /duration ");
+            if (durationIndex == -1) {
+                throw new InvalidTaskFormatException("fixed duration");
+            }
+            String description = descriptionAndDuration.substring(0, durationIndex);
+            String duration = descriptionAndDuration.substring(durationIndex + 11);
+            if (duration.trim().isEmpty()) {
+                throw new MissingDurationException();
+            }
+            Task currentTask = new FixedDuration(description, Float.parseFloat(duration));
+            taskList.add(currentTask);
+            storage.saveToLocal(taskList);
+            return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
+                    + taskList.size() + " tasks in your list";
+        } catch (NumberFormatException e) {
+            throw new InvalidFixedDurationTimeException();
         }
-        int durationIndex = descriptionAndDuration.indexOf(" /duration ");
-        if (durationIndex == -1) {
-            throw new InvalidTaskFormatException("fixed duration");
-        }
-        String description = descriptionAndDuration.substring(0, durationIndex);
-        String duration = descriptionAndDuration.substring(durationIndex + 11);
-        if (duration.trim().isEmpty()) {
-            throw new MissingDurationException();
-        }
-        Task currentTask = new FixedDuration(description, Integer.parseInt(duration));
-        taskList.add(currentTask);
-        storage.saveToLocal(taskList);
-        return "\tOK, I've added this task: " + currentTask + "\n\tNow there are "
-                + taskList.size() + " tasks in your list";
     }
 
     /**
