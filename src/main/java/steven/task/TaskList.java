@@ -157,7 +157,7 @@ public class TaskList {
             return "\tOK, DELETE THIS ONE ALR:\n\t" + deletedTask + "\n\tNow ur list got "
                     + taskList.size() + " task";
         } catch (NumberFormatException e) {
-            return "Invalid input";
+            return "\tdelete WHAT??";
         }
     }
 

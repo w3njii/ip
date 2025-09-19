@@ -1,9 +1,12 @@
 package steven.task;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import steven.exception.InvalidDateAndTimeException;
 import steven.exception.InvalidDateAndTimeFormatException;
+import steven.exception.StevenException;
 
 /**
  * Represents a task that start at a specific date/time and ends at a specific date/time.
@@ -25,9 +28,11 @@ public class Event extends Task {
      * @param description the description of the task
      * @param startTimeString the start time string in the specified format
      * @param endTimeString the end time string in the specified format
+     * @throws InvalidDateAndTimeFormatException If the given deadline string is not in the correct format
+     * @throws InvalidDateAndTimeException If the given deadline string is an invalid date or time
      */
     public Event(String description, String startTimeString, String endTimeString)
-            throws InvalidDateAndTimeFormatException {
+            throws StevenException {
         super(description);
         assert startTimeString != null : "Start time String should not be null";
         assert endTimeString != null : "End time String should not be null";
@@ -50,6 +55,8 @@ public class Event extends Task {
             assert this.endTime != null : "End time should not be null";
         } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
             throw new InvalidDateAndTimeFormatException();
+        } catch (DateTimeException e) {
+            throw new InvalidDateAndTimeException();
         }
     }
 

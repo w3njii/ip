@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import steven.exception.InvalidDateAndTimeFormatException;
+import steven.exception.StevenException;
 import steven.task.Deadline;
 import steven.task.Event;
 import steven.task.FixedDuration;
@@ -82,7 +82,6 @@ public class Storage {
         return tasks;
     }
 
-
     /**
      * Parses a task string in its save format and adds the corresponding Task object to the internal list.
      *
@@ -95,12 +94,12 @@ public class Storage {
             if (task.startsWith("[X]", 3)) {
                 tasks.get(tasks.size() - 1).markAsDone();
             }
-        } catch (InvalidDateAndTimeFormatException e) {
-            System.out.println(e.getMessage());
+        } catch (StevenException e) {
+            System.err.println(e.getMessage());
         }
     }
 
-    private Task parseTask(String task) throws InvalidDateAndTimeFormatException {
+    private Task parseTask(String task) throws StevenException {
         String type = task.substring(0, task.indexOf("]") + 1);
         return switch (type) {
         case "[T]" -> parseToDoTask(task);
@@ -115,14 +114,14 @@ public class Storage {
         return new ToDo(task.substring(7));
     }
 
-    private Task parseDeadlineTask(String task) throws InvalidDateAndTimeFormatException {
+    private Task parseDeadlineTask(String task) throws StevenException {
         int byIndex = task.indexOf(" (by:");
         String description = task.substring(7, byIndex);
         String by = task.substring(byIndex + 6, task.indexOf(")"));
         return new Deadline(description, by);
     }
 
-    private Task parseEventTask(String task) throws InvalidDateAndTimeFormatException {
+    private Task parseEventTask(String task) throws StevenException {
         int fromIndex = task.indexOf(" (from:");
         int toIndex = task.indexOf(" to:");
         String description = task.substring(7, fromIndex);

@@ -1,9 +1,12 @@
 package steven.task;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import steven.exception.InvalidDateAndTimeException;
 import steven.exception.InvalidDateAndTimeFormatException;
+import steven.exception.StevenException;
 
 /**
  * Represents a task that needs to be done before a specific date or time.
@@ -23,8 +26,9 @@ public class Deadline extends Task {
      * @param description the description of the task
      * @param deadline the deadline string in the specified format
      * @throws InvalidDateAndTimeFormatException If the given deadline string is not in the correct format
+     * @throws InvalidDateAndTimeException If the given deadline string is an invalid date or time
      */
-    public Deadline(String description, String deadline) throws InvalidDateAndTimeFormatException {
+    public Deadline(String description, String deadline) throws StevenException {
         super(description);
         assert deadline != null : "Deadline should not be null";
         try {
@@ -37,6 +41,8 @@ public class Deadline extends Task {
             this.deadline = LocalDateTime.of(year, month, day, hour, minute);
         } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
             throw new InvalidDateAndTimeFormatException();
+        } catch (DateTimeException e) {
+            throw new InvalidDateAndTimeException();
         }
     }
 
