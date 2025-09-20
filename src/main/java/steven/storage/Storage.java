@@ -135,7 +135,7 @@ public class Storage {
         int durationIndex = task.indexOf(" (needs");
         int durationEndIndex = task.indexOf(" hours)");
         String description = task.substring(8, durationIndex);
-        int duration = Integer.parseInt(task.substring(durationIndex + 8, durationEndIndex));
+        float duration = Float.parseFloat(task.substring(durationIndex + 8, durationEndIndex));
         return new FixedDuration(description, duration);
     }
 }
