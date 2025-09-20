@@ -2,6 +2,7 @@ package steven.gui;
 
 import java.util.Objects;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -9,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 import steven.Steven;
 
 /**
@@ -46,12 +49,19 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = steven.getResponse(input);
-        if (response != null) {
-            dialogContainer.getChildren().addAll(
-                    DialogBox.getUserDialog(input, userImage),
-                    DialogBox.getStevenDialog(response, stevenImage)
-            );
-            userInput.clear();
+        if (response == null) {
+            return;
+        }
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getStevenDialog(response, stevenImage)
+        );
+        userInput.clear();
+        if (input.trim().equalsIgnoreCase("bye")) {
+            Stage stage = (Stage) userInput.getScene().getWindow();
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.setOnFinished(event -> stage.close());
+            delay.play();
         }
     }
 }
