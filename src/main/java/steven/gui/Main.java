@@ -24,6 +24,7 @@ public class Main extends Application {
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setSteven(steven);
+            stage.setTitle("Steven Task Manager Chatbot");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
